@@ -7,14 +7,17 @@ import {NewPortraitComponent} from './new-portrait/new-portrait.component';
 import {LoadingService} from '../../services/loading/loading.service';
 import {SweetAlertService} from '../../services/sweet-alert/sweet-alert.service';
 import { UpdatePortraitComponent } from './update-portrait/update-portrait.component';
+import {EchartsPluginsModule} from '../../components/echarts-plugins/echarts-plugins.module';
+import { EcharsInfoComponent } from './echars-info/echars-info.component';
 
 @NgModule({
   imports: [
     CommonModule,
     PortraitManageOperationRoutingModule,
-    DatatablePluginsModule
+    DatatablePluginsModule,
+    EchartsPluginsModule
   ],
-  declarations: [PortraitManageComponent, NewPortraitComponent, UpdatePortraitComponent],
+  declarations: [PortraitManageComponent, NewPortraitComponent, UpdatePortraitComponent, EcharsInfoComponent],
   providers: [LoadingService, SweetAlertService]
 })
 export class PortraitManageOperationModule {

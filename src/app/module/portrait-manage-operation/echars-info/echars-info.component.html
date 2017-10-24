@@ -1,0 +1,171 @@
+<div class="ibox-content clearfix m-t-sm">
+  <div class="com-sm-12">
+    <div class="form-group m-b-md">
+      <span class="title-before pull-left"></span>
+      <h2 class="pull-left m-l-sm" style="font-size: 20px;">用户习惯分析</h2>
+    </div>
+    <div class="form-group">
+      <div class="clear-padding-right">
+        <div class="ibox float-e-margins bg-color margin-bottom-15">
+          <div class="ibox-content bg-color remove-border-style">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_e1" data-toggle="tab">使用场景</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_e1" style="width: 800px; height: 400px;">
+                  <div class="echarts">
+                    <app-echarts #tab_e_ref></app-echarts>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-sm-12">
+    <div class="form-group m-b-md">
+      <span class="title-before pull-left"></span>
+      <h2 class="pull-left m-l-sm" style="font-size: 20px;">人口学信息</h2>
+    </div>
+    <div class="form-group">
+      <div class="clear-padding-right">
+        <div class="ibox float-e-margins bg-color margin-bottom-15">
+          <div class="ibox-content bg-color remove-border-style">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active" (click)="changeInfoTab(1)"><a href="#tab_i1" data-toggle="tab">城市等级</a></li>
+                <li (click)="changeInfoTab(2)"><a href="#tab_i1" data-toggle="tab">年龄</a></li>
+                <li (click)="changeInfoTab(3)"><a href="#tab_i1" data-toggle="tab">职业</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active m-t-md" id="tab_i1" style="width: 800px; height: 400px;">
+                  <div class="echarts">
+                    <app-echarts #tab_i_ref></app-echarts>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-sm-12">
+    <div class="form-group m-b-md">
+      <span class="title-before pull-left"></span>
+      <h2 class="pull-left m-l-sm" style="font-size: 20px;">用户等级</h2>
+    </div>
+    <div class="form-group">
+      <div class="clear-padding-right">
+        <div class="ibox float-e-margins bg-color margin-bottom-15">
+          <div class="ibox-content bg-color remove-border-style">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active" (click)="changeDTab(1)"><a href="#tab_d1" data-toggle="tab">淘宝等级</a></li>
+                <li (click)="changeDTab(2)"><a href="#tab_d1" data-toggle="tab">一淘会员时长</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active m-t-md" id="tab_d1" style="width: 800px; height: 400px;">
+                  <div class="echarts">
+                    <app-echarts #tab_d_ref></app-echarts>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-sm-12">
+    <div class="form-group m-b-md">
+      <span class="title-before pull-left"></span>
+      <h2 class="pull-left m-l-sm" style="font-size: 20px;">用户购买</h2>
+    </div>
+    <div class="form-group">
+      <div class="clear-padding-right">
+        <div class="ibox float-e-margins bg-color margin-bottom-15">
+          <div class="ibox-content bg-color remove-border-style">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active" (click)="changeBTab(1)"><a href="#tab_b1" data-toggle="tab">淘宝成交频次</a></li>
+                <li (click)="changeBTab(2)"><a href="#tab_b1" data-toggle="tab">成交类型</a></li>
+                <li (click)="changeBTab(3)"><a href="#tab_b1" data-toggle="tab">淘宝成交额</a></li>
+                <li (click)="changeBTab(4)"><a href="#tab_b1" data-toggle="tab">用户购买_重点画像</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active m-t-md" id="tab_b1" style="width: 800px; height: 400px;">
+                  <div class="echarts">
+                    <app-echarts #tab_b_ref></app-echarts>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-sm-12">
+    <div class="form-group m-b-md">
+      <span class="title-before pull-left"></span>
+      <h2 class="pull-left m-l-sm" style="font-size: 20px;">用户等级</h2>
+    </div>
+    <div class="form-group">
+      <div class="clear-padding-right">
+        <div class="ibox float-e-margins bg-color margin-bottom-15">
+          <div class="ibox-content bg-color remove-border-style">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active" (click)="changeLTab(1)"><a href="#tab_l1" data-toggle="tab">淘宝等级</a></li>
+                <li (click)="changeLTab(2)"><a href="#tab_d1" data-toggle="tab">一淘会员时长</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active m-t-md" id="tab_l1" style="width: 800px; height: 400px;">
+                  <div class="echarts">
+                    <app-echarts #tab_l_ref></app-echarts>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-sm-12">
+    <div class="form-group m-b-md">
+      <span class="title-before pull-left"></span>
+      <h2 class="pull-left m-l-sm" style="font-size: 20px;">用户等级</h2>
+    </div>
+    <div class="form-group">
+      <div class="clear-padding-right">
+        <div class="ibox float-e-margins bg-color margin-bottom-15">
+          <div class="ibox-content bg-color remove-border-style">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active" (click)="changeDTab(1)"><a href="#tab_t1" data-toggle="tab">淘宝等级</a></li>
+                <li (click)="changeTTab(2)"><a href="#tab_d1" data-toggle="tab">一淘会员时长</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active m-t-md" id="tab_t1" style="width: 800px; height: 400px;">
+                  <div class="echarts">
+                    <app-echarts #tab_t_ref></app-echarts>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

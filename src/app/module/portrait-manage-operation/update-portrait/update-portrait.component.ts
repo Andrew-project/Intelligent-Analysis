@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-update-portrait',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdatePortraitComponent implements OnInit {
 
-  constructor() { }
+  isEchart: boolean = false;
+
+  constructor(private elementRef: ElementRef) {
+  }
 
   ngOnInit() {
+  }
+
+  changeTab(isEchart: boolean) {
+    this.isEchart = isEchart;
   }
 
 }

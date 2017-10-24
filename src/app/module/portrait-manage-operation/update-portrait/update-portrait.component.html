@@ -1,3 +1,40 @@
-<p>
-  update-portrait works!
-</p>
+<div class="wrapper animated fadeInRight">
+  <div class="row" style="height: 100%;">
+    <div class="col-sm-12">
+      <div class="tabs-container">
+        <ul class="nav nav-tabs">
+          <li class="active" (click)="changeTab(false)"><a data-toggle="tab" href="#tab-1"><i class="fa fa-info"></i> 基本条件分析</a></li>
+          <li class="" (click)="changeTab(false)"><a data-toggle="tab" href="#tab-2"><i class="fa fa-rmb"></i> 分析包含画像</a></li>
+          <li class="" (click)="changeTab(false)"><a data-toggle="tab" href="#tab-3"><i class="fa fa-book"></i> 典型画像特征</a></li>
+          <li class="" (click)="changeTab(true)"><a data-toggle="tab" href="#tab-4"><i class="fa fa-book"></i> 用户画像特征</a></li>
+          <li class="" (click)="changeTab(false)"><a data-toggle="tab" href="#tab-5"><i class="fa fa-book"></i> 智能用户画像分析结果</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-1" class="tab-pane active">
+            <div class="panel-body">
+
+            </div>
+          </div>
+          <div id="tab-2" class="tab-pane">
+            <div class="panel-body">
+
+            </div>
+          </div>
+          <div id="tab-3" class="tab-pane">
+            <div class="panel-body">
+            </div>
+          </div>
+          <div id="tab-4" class="tab-pane">
+            <div class="panel-body">
+              <app-echars-info [isNow]="isEchart"></app-echars-info>
+            </div>
+          </div>
+          <div id="tab-5" class="tab-pane">
+            <div class="panel-body">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
