@@ -9,6 +9,10 @@ const routes: Routes = [
     canActivate: [],
     canActivateChild: [],
     children: [
+      {
+        path: 'portrait',
+        loadChildren: 'app/module/portrait-manage-operation/portrait-manage-operation.module#PortraitManageOperationModule'
+      }
     ]
   }
 ];

@@ -14,11 +14,11 @@ export class IndexComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit () {
-    if (isNullOrUndefined(localStorage.getItem('userInfo'))) {
-        this.router.navigate(['admin/login']);
-
-        swal('您没有权限访问', '请重新登录', 'warning');
-    }
+    // if (isNullOrUndefined(localStorage.getItem('userInfo'))) {
+    //     this.router.navigate(['admin/login']);
+    //
+    //     swal('您没有权限访问', '请重新登录', 'warning');
+    // }
   }
 
   ngAfterViewInit (): void {

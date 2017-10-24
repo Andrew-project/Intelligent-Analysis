@@ -1,0 +1,32 @@
+<div class="wapper">
+  <div class="ibox">
+    <div class="ibox-title m-b-lg">
+      <div class="row">
+        <form>
+          <div class="col-sm-4 form-group text-center">
+            <p class="m-b-sm">用户总数</p>
+            <h1>104984281</h1>
+          </div>
+          <div class="col-sm-4 form-group text-center">
+            <p class="m-b-sm">数据版本</p>
+            <h1>20171013</h1>
+          </div>
+          <div class="col-sm-4 form-group text-center">
+            <p class="m-b-sm">分析模版数</p>
+            <h1>8</h1>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <div class="col-sm-12 clearfix m-b-md">
+          <a class="btn btn-primary btn-sm pull-right" [routerLink]="['./new']"><i class="fa fa-plus m-r-sm"></i>新建分析</a>
+        </div>
+      </div>
+      <div>
+        <app-datatable-plugins [inputOptions]="listOpt" #listRef></app-datatable-plugins>
+      </div>
+    </div>
+  </div>
+</div>
