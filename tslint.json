@@ -3,7 +3,81 @@
     "node_modules/codelyzer"
   ],
   "rules": {
-    "arrow-return-shorthand": true,
+    "no-import-side-effect": [
+      false,
+      {
+        "ignore-module": "(\\.html|\\.css)$"
+      }
+    ],
+    "only-arrow-functions": false,
+    "prefer-for-of": false,
+    "ban": [
+      false,
+      "$"
+    ],
+    "import-blacklist": [
+      false,
+      "rxjs"
+    ],
+    "no-console": [
+      false,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-null-keyword": false,
+    "no-require-imports": false,
+    "no-string-literal": false,
+    "object-literal-sort-keys": false,
+    "array-type": [
+      false,
+      "array",
+      "generic",
+      "array-simple"
+    ],
+    "completed-docs": false,
+    "file-header": false,
+    "newline-before-return": false,
+    "no-parameter-properties": false,
+    "object-literal-shorthand": false,
+    "one-variable-per-declaration": false,
+    "prefer-function-over-method": false,
+    "prefer-method-signature": false,
+    "space-before-function-paren": true,
+    "ordered-imports": true,
+    "no-unnecessary-initializer": true,
+    "no-angle-bracket-type-assertion": true,
+    "new-parens": true,
+    "interface-name": [true, "never-prefix"],
+    "arrow-return-shorthand": [true, "multiline"],
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ],
+    "no-mergeable-namespace": true,
+    "no-default-export": true,
+    "max-classes-per-file": [
+      true,
+      2
+    ],
+    "cyclomatic-complexity": [
+      true,
+      25
+    ],
+    "linebreak-style": [
+      true,
+      "LF"
+    ],
+    "use-isnan": true,
+    "switch-default": true,
+    "no-unsafe-finally": true,
+    "no-misused-new": true,
+    "no-invalid-this": true,
+    "no-duplicate-super": true,
+    "no-conditional-assignment": true,
     "callable-types": true,
     "class-name": true,
     "comment-format": [
@@ -13,11 +87,6 @@
     "curly": true,
     "eofline": true,
     "forin": true,
-    "import-blacklist": [
-      true,
-      "rxjs",
-      "rxjs/Rx"
-    ],
     "import-spacing": true,
     "indent": [
       true,
@@ -27,33 +96,19 @@
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      150
     ],
     "member-access": false,
     "member-ordering": [
       true,
-      {
-        "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
-        ]
-      }
+      "static-before-instance",
+      "variables-before-functions"
     ],
     "no-arg": true,
     "no-bitwise": true,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
     "no-construct": true,
     "no-debugger": true,
-    "no-duplicate-super": true,
+    "no-duplicate-variable": true,
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
@@ -61,18 +116,19 @@
       true,
       "ignore-params"
     ],
-    "no-misused-new": true,
-    "no-non-null-assertion": true,
     "no-shadowed-variable": true,
-    "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
-    "no-unnecessary-initializer": true,
     "no-unused-expression": true,
+    "no-unused-variable": [
+      true,
+      {
+        "ignore-pattern": "^__"
+      }
+    ],
     "no-use-before-declare": true,
     "no-var-keyword": true,
-    "object-literal-sort-keys": false,
     "one-line": [
       true,
       "check-open-brace",
@@ -87,7 +143,6 @@
     ],
     "radix": true,
     "semicolon": [
-      true,
       "always"
     ],
     "triple-equals": [
@@ -116,13 +171,13 @@
       "check-type"
     ],
     "directive-selector": [
-      true,
+      false,
       "attribute",
       "app",
       "camelCase"
     ],
     "component-selector": [
-      true,
+      false,
       "element",
       "app",
       "kebab-case"
@@ -136,6 +191,8 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
+    "no-access-missing-member": true,
+    "templates-use-public": true,
     "invoke-injectable": true
   }
 }

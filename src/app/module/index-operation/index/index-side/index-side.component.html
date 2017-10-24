@@ -1,0 +1,45 @@
+<!--<bw-image-cropper-plugins #childRef [inputOptions]="{value:userInfo.userInfo.avatarUrl, cName:'update-avatarUrl'}"></bw-image-cropper-plugins>-->
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle" src=""/>
+                             </span>
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                              class="font-bold">xxxxxx</strong>
+                             </span> <span class="text-muted text-xs block">xxx<b
+                              class="caret"></b></span> </span>
+          </a>
+          <ul class="dropdown-menu animated fadeInRight m-t-xs">
+            <!--<li><a>个人资料</a></li>-->
+            <li><a (click)="onUpdatePassword()">修改密码</a></li>
+            <!--<li (click)="updateImg()"><a>修改头像</a></li>-->
+            <li class="divider"></li>
+            <li><a (click)="onSignOut()">注销</a></li>
+          </ul>
+        </div>
+        <div class="logo-element">
+          心声
+        </div>
+      </li>
+      <ng-container *ngFor="let routing of sideRouting; let i = index;">
+        <li class="sideRoutes">
+          <a><i class="fa {{routing.appIconClass}}"></i>
+            <span class="nav-label">{{routing.appName||routing.app}}</span><span
+              class='fa arrow'></span></a>
+          <ul class="nav nav-second-level collapse">
+            <ng-container *ngFor="let subRouting of routing.subRouting; let idx = index;">
+              <!--<li (click)="navRouter(subRouting.path)">-->
+              <!--<li [attr.bw-router]="subRouting.path" routerLinkActive="">-->
+              <li>
+                <a [routerLink]="'/'+subRouting.path" class="{{subRouting.sideColor}}" (click)="onClickSide(i, idx)">{{subRouting.name||subRouting.path}}</a>
+              </li>
+            </ng-container>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,16 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2></h2>
+    <ol class="breadcrumb">
+      <li>
+        <a>智能用户画像分析</a>
+      </li>
+      <li *ngFor="let r of routing">
+        <a [routerLink]="(r.url==''||r.notLink)?[]:[r.url]">{{r.name}}</a>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+</div>

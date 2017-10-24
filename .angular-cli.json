@@ -19,9 +19,42 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "assets/css/bootstrap.min.css",
+        "assets/font-awesome/css/font-awesome.css",
+        "assets/css/animate.css",
+        "assets/css/balloon.min.css",
+        "assets/css/plugins/sweetalert/sweetalert.css",
+        "assets/css/plugins/cropper/cropper.css",
+        "assets/css/plugins/jsTree/style.css",
+        "assets/css/plugins/steps/jquery.steps.css",
+        "assets/css/plugins/datatables/datatables.css",
+        "assets/css/plugins/bootstrapdatetimepicker/build_standalone.css",
+        "assets/css/plugins/iCheck/custom.css",
+        "assets/css/plugins/chosen/bootstrap-chosen.css",
+        "assets/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css",
+        "assets/css/style.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/js/jquery-3.1.1.min.js",
+        "assets/js/plugins/bootstrapdatetimepicker/bootstrap-datetimepicker.min.js",
+        "assets/js/plugins/bootstrap-timepicker/bootstrap-timepicker.js",
+        "assets/js/plugins/aliyun/Aliyun-OSS.js",
+        "assets/js/plugins/sweetalert/sweetalert.min.js",
+        "assets/js/plugins/cropper/cropper.js",
+        "assets/js/plugins/jsTree/jstree.min.js",
+        "assets/js/plugins/switchery/switchery.js",
+        "assets/js/plugins/datatables/datatables.js",
+        "assets/js/plugins/echarts/echarts.js",
+        "assets/js/plugins/echarts/echarts-wordcloud.min.js",
+        "assets/js/plugins/md5/md5.js",
+        "assets/js/plugins/nouslider/jquery.nouislider.min.js",
+        "assets/js/plugins/rangeSlider/ion.rangeSlider.min.js",
+        "assets/js/plugins/jasny/jasny-bootstrap.min.js",
+        "assets/js/plugins/steps/jquery.steps.min.js",
+        "assets/js/plugins/chosen/chosen.jquery.js",
+        "assets/js/plugins/validate/jquery.validate.min.js",
+        "assets/js/iconfont/iconfont.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -36,16 +69,13 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json",
-      "exclude": "**/node_modules/**"
+      "project": "src/tsconfig.app.json"
     },
     {
-      "project": "src/tsconfig.spec.json",
-      "exclude": "**/node_modules/**"
+      "project": "src/tsconfig.spec.json"
     },
     {
-      "project": "e2e/tsconfig.e2e.json",
-      "exclude": "**/node_modules/**"
+      "project": "e2e/tsconfig.e2e.json"
     }
   ],
   "test": {
@@ -54,10 +84,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "class": {
-      "spec": false
-    },
+    "styleExt": "scss",
     "component": {}
   }
 }

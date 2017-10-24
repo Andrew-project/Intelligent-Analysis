@@ -1,5 +1,7 @@
 /* SystemJS module definition */
-declare var module: NodeModule;
-interface NodeModule {
-  id: string;
-}
+declare var JQuery:any;
+declare var jquery:any;
+declare var System: any;
+declare var $: any;
+declare var swal: any;
+declare var echarts: any;
