@@ -401,7 +401,7 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
         }]);
         break;
       case 4:
-        vm.initBar(vm.tab_b_ref,['一淘有成交'], ['所占比例', '覆盖人数'], [28.02293196368503], [15495]);
+        vm.initBar(vm.tab_b_ref, ['所占比例', '覆盖人数'], ['一淘有成交'],[28.02293196368503], [15495]);
         break;
       default:
         break;

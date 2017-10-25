@@ -9,13 +9,15 @@ import {SweetAlertService} from '../../services/sweet-alert/sweet-alert.service'
 import { UpdatePortraitComponent } from './update-portrait/update-portrait.component';
 import {EchartsPluginsModule} from '../../components/echarts-plugins/echarts-plugins.module';
 import { EcharsInfoComponent } from './echars-info/echars-info.component';
+import {JstreePluginsModule} from '../../components/jstree-plugins/jstree-plugins.module';
 
 @NgModule({
   imports: [
     CommonModule,
     PortraitManageOperationRoutingModule,
     DatatablePluginsModule,
-    EchartsPluginsModule
+    EchartsPluginsModule,
+    JstreePluginsModule
   ],
   declarations: [PortraitManageComponent, NewPortraitComponent, UpdatePortraitComponent, EcharsInfoComponent],
   providers: [LoadingService, SweetAlertService]

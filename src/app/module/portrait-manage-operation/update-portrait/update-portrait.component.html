@@ -33,7 +33,7 @@
                   <h3 class="pull-left m-l-sm" style="font-size: 18px;">典型画像特征分布</h3>
                   <span class="pull-left m-l-sm m-t-xs">(备注:典型是指每个类目下超过平均值的特征)</span>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 m-t-md">
                   <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -45,7 +45,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="text-center" *ngFor="let item of arr">
+                    <tr class="text-center" *ngFor="let item of arrList">
                       <td style="vertical-align: middle;" [attr.rowspan]="item.l0_rowspan" *ngIf="item.l0_rowspan > 0">
                         {{item.l0_name}}
                       </td>
@@ -69,6 +69,43 @@
           </div>
           <div id="tab-5" class="tab-pane">
             <div class="panel-body">
+              <div class="clearfix">
+                <div class="col-sm-6">
+                  <span class="title-before pull-left"></span>
+                  <h3 class="pull-left m-l-sm" style="font-size: 18px;">特征分类</h3>
+                  <div class="col-sm-12">
+                    <div class="m-t-sm">
+                      <label class="pull-left m-t-sm m-r-md">节点搜索: </label>
+                      <input type="text" class="form-control" style="width: 50%" #input (keyup)="searchTree(input.value)">
+                    </div>
+                    <app-jstree-plugins #jsTreeRef (jsValueChange)="getTreeInfo($event)"></app-jstree-plugins>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <span class="title-before pull-left"></span>
+                  <h3 class="pull-left m-l-sm" style="font-size: 18px;">典型用户人群信息</h3>
+                  <div class="col-sm-12" *ngIf="treeInfo">
+                    <label class="control-label block">当前节点典型人群数:&nbsp;&nbsp;{{treeInfo.group_num}}</label>
+                    <label class="control-label block">节点包含典型人群数:&nbsp;&nbsp;{{treeInfo.total_group_num}}</label>
+                    <table class="table table-bordered m-t-md" *ngIf="treeInfo.group">
+                      <thead>
+                      <tr>
+                        <th>群体特征</th>
+                        <th>覆盖用户数量</th>
+                        <th>所占比例</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let item of treeInfo.group">
+                        <td>{{item.name}}</td>
+                        <td>{{item.user_num}}</td>
+                        <td>{{item.user_num_rate.toFixed(2)}}%</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

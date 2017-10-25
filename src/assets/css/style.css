@@ -5330,6 +5330,10 @@ dd.project-people {
 .jstree-default .jstree-icon.none {
   width: 0;
 }
+.jstree-search {
+  color: inherit !important;
+  font-weight: normal !important;
+}
 /* CLIENTS */
 .clients-list {
   margin-top: 20px;
