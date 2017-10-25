@@ -1,8 +1,14 @@
-.title-before {
-  margin-top: 3px;
-  padding: 12px 2px;
-  background-color: #00c1c1;
-}
-.echarts {
-  height: 450px;
+.echart-info-component {
+  .ibox-content-border {
+    border-top: 0px;
+    border-bottom: 1px solid #e7eaec;
+  }
+  .title-before {
+    margin-top: 3px;
+    padding: 12px 2px;
+    background-color: #00c1c1;
+  }
+  .echarts {
+    height: 450px;
+  }
 }
