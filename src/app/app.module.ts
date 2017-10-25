@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {ROOT_ROUTING} from './app.routing';
 import {IndexOperationModule} from './module/index-operation/index-operation.module';
+import {HttpInterceptor} from './services/http/http-interceprot.service';
 
 require('assets/js/jquery-3.1.1.min.js');
 require('assets/js/bootstrap.min.js');
@@ -20,7 +21,7 @@ require('assets/js/bootstrap.min.js');
     ROOT_ROUTING,
     IndexOperationModule
   ],
-  providers: [],
+  providers: [HttpInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule {

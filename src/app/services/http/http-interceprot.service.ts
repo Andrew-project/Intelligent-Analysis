@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class HttpInterceptor {
 
-  beforeRequest (req: Request): Request {
+  initRequestOptions (query?: Object) {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
@@ -13,10 +13,8 @@ export class HttpInterceptor {
     headers.append('Access-Control-Allow-Headers', 'X-Requested-With');
     headers.append('Content-Type', 'application/json');
     headers.append('crossDomain', 'true');
-    headers.append('Authorization', localStorage['token'] || '');
-    req.headers = headers;
-    console.log(req);
-    return req;
+    headers.append('Authorization', localStorage.token || '');
+    return query ? {headers: headers, params: query} : {headers: headers};
   }
 
   afterResponse (res: Observable < Response >): Observable < any > {

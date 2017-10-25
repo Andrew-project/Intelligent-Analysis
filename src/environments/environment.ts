@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: true,
+  baseUrl: 'http://api.zhushou.staging.youhujia.com/api/evans/v1/admins/sickbed-tag',
 };

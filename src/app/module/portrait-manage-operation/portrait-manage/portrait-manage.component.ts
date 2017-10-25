@@ -3,6 +3,9 @@ import {DatatablePluginsComponent} from '../../../components/datatable-plugins/d
 import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.service';
 import {LoadingService} from '../../../services/loading/loading.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Http} from '@angular/http';
+import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-portrait-manage',
@@ -12,14 +15,17 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class PortraitManageComponent implements OnInit, AfterViewInit {
   @ViewChild('listRef') listRef: DatatablePluginsComponent;
   listOpt: any = {
-      options: {}
+    options: {}
   };
 
   constructor(private elementRef: ElementRef,
               private sweetAlertService: SweetAlertService,
               private loadingService: LoadingService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private http: Http,
+              private httpOpt: HttpInterceptor) {
+  }
 
   ngOnInit() {
     this.listOpt.options = {
@@ -77,6 +83,10 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
         }
       ]
     };
+    this.http.get(environment.baseUrl, this.httpOpt.initRequestOptions())
+      .subscribe((res) => {
+        console.log(res)
+      });
     this.listRef.initDatatable(this.listOpt.options);
 
   }
