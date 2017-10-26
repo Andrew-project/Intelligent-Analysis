@@ -3,9 +3,10 @@ import {DatatablePluginsComponent} from '../../../components/datatable-plugins/d
 import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.service';
 import {LoadingService} from '../../../services/loading/loading.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
 import {environment} from '../../../../environments/environment';
+import {formatDate} from '../../../services/functions/date';
 
 @Component({
   selector: 'app-portrait-manage',
@@ -16,6 +17,10 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
   @ViewChild('listRef') listRef: DatatablePluginsComponent;
   listOpt: any = {
     options: {}
+  };
+  overview: any = {
+    totalUser: 0,
+    templateNum: 0
   };
 
   constructor(private elementRef: ElementRef,
@@ -31,35 +36,38 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
     this.listOpt.options = {
       pageLength: 10,
       searching: true,
-      titleColumns: ['名称', '创建人', '状态', '最新分析时间', '操作'],
+      titleColumns: ['名称', '描述', '创建人', '状态', '最新分析时间', '操作'],
       searchData: '',
       initSort: [
-        [3, 'desc']
+        [4, 'desc']
       ],
       columns: [
-        {
-          'data': 'title',
-          'searchable': true,
-          'sortable': false
-        },
         {
           'data': 'name',
           'searchable': true,
           'sortable': false
         },
         {
-          'data': 'type',
+          'data': 'desc',
           'searchable': true,
-          'sortable': false,
-          'render': (type) =>
-            type === 1 ? '分析完成' : '带完善配置'
+          'sortable': false
         },
         {
-          'data': 'updatedAt',
+          'data': 'creator',
+          'searchable': true,
+          'sortable': false
+        },
+        {
+          'data': 'status',
+          'searchable': true,
+          'sortable': false
+        },
+        {
+          'data': 'analysisTime',
           'searchable': false,
           'sortable': true,
-          'render': (type) =>
-            type === 1 ? '分析完成' : '带完善配置'
+          'render': (analysisTime) =>
+            formatDate(analysisTime, 'yyyy-MM-dd hh:mm')
         },
         {
           'data': 'id',
@@ -75,18 +83,32 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
       ajaxOpt: {},
       localData: [
         {
-          id: 1,
-          title: '签到用户分析',
-          name: '左云龙',
-          type: 1,
-          updatedAt: 1508837818270
+          "id": 1,
+          "name": "签到用户分析",
+          "desc": "是对签到用户的分析",
+          "creator": "张三",
+          "status": "分析完成",
+          "analysisTime": 1508644737
         }
       ]
     };
-    this.http.get(environment.baseUrl, this.httpOpt.initRequestOptions())
-      .subscribe((res) => {
-        console.log(res)
-      });
+    // this.loadingService.show();
+    // this.http.get(environment.baseUrl, this.httpOpt.initRequestOptions())
+    //   .map((response: Response) => {
+    //     return response.json();
+    //   })
+    //   .subscribe(
+    //     (res: any) => {
+    // this.loadingService.hide();
+    //       if (res.result.success) {
+    //         this.overview = res.data.overview;
+    //         this.listOpt.options['localData'] = res.data.templateList;
+    //       } else {
+    //         swal('请求失败', res.result.displayMsg, 'warning');
+    //       }
+    //       console.log(res)
+    //     }
+    //   );
     this.listRef.initDatatable(this.listOpt.options);
 
   }

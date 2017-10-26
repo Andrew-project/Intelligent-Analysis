@@ -5334,6 +5334,9 @@ dd.project-people {
   color: inherit !important;
   font-weight: normal !important;
 }
+.jstree-wholerow-clicked {
+  background: #d8e2e1 !important;
+}
 /* CLIENTS */
 .clients-list {
   margin-top: 20px;

@@ -10,10 +10,13 @@ import { UpdatePortraitComponent } from './update-portrait/update-portrait.compo
 import {EchartsPluginsModule} from '../../components/echarts-plugins/echarts-plugins.module';
 import { EcharsInfoComponent } from './echars-info/echars-info.component';
 import {JstreePluginsModule} from '../../components/jstree-plugins/jstree-plugins.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     PortraitManageOperationRoutingModule,
     DatatablePluginsModule,
     EchartsPluginsModule,

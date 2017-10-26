@@ -5,7 +5,7 @@
         <form>
           <div class="col-sm-4 form-group text-center">
             <p class="m-b-sm">用户总数</p>
-            <h1>104984281</h1>
+            <h1>{{overview.totalUser}}</h1>
           </div>
           <div class="col-sm-4 form-group text-center">
             <p class="m-b-sm">数据版本</p>
@@ -13,15 +13,21 @@
           </div>
           <div class="col-sm-4 form-group text-center">
             <p class="m-b-sm">分析模版数</p>
-            <h1>8</h1>
+            <h1>{{overview.templateNum}}</h1>
           </div>
         </form>
       </div>
     </div>
     <div class="ibox-content">
       <div class="row">
-        <div class="col-sm-12 clearfix m-b-md">
-          <a class="btn btn-primary btn-sm pull-right" [routerLink]="['./new']"><i class="fa fa-plus m-r-sm"></i>新建分析</a>
+        <div class="clearfix m-b-md">
+          <div class="col-sm-6">
+            <span class="title-before pull-left"></span>
+            <h3 class="pull-left m-l-sm">分析列表</h3>
+          </div>
+          <div class="col-sm-6">
+            <a class="btn btn-primary btn-sm pull-right" [routerLink]="['./new']"><i class="fa fa-plus m-r-sm"></i>新建分析</a>
+          </div>
         </div>
       </div>
       <div>

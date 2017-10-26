@@ -1,3 +1,52 @@
-<p>
-  new-portrait works!
-</p>
+<div class="wapper">
+  <div class="ibox">
+    <div class="ibox-title">
+      <h4>新建分析</h4>
+    </div>
+    <div class="ibox-content">
+      <div class="row">
+        <form #f="ngForm" (ngSubmit)="0">
+          <div class="form-group">
+            <div class="col-sm-12">
+              <span class="title-before pull-left"></span>
+              <h3 class="pull-left m-l-sm">基本信息</h3>
+            </div>
+            <div class="col-sm-3 m-t-sm">
+              <label class="control-label">分析名称</label>
+              <input type="text" class="form-control" [(ngModel)]="info.name" name="name" required>
+            </div>
+            <div class="col-sm-2 m-l-md m-t-sm {{support.invalid ? 'has-error' : ''}}">
+              <label class="control-label">参数设置(%)</label>
+              <input type="text" class="form-control" #support="ngModel" [(ngModel)]="info.support" name="support"
+                     required pattern="([0-9]{1,2}|100)">
+            </div>
+          </div>
+          <div class="col-sm-12 form-group m-t-md">
+            <label class="control-label">分析描述</label>
+            <textarea name="desc" style="resize: none;width: 50%;" cols="4" rows="5" class="form-control"
+                      [(ngModel)]="info.desc"></textarea>
+          </div>
+          <div class="col-sm-12 m-t-xl">
+            <span class="title-before pull-left"></span>
+            <h3 class="pull-left m-l-sm">目标用户分析条件设置</h3>
+          </div>
+          <div class="col-sm-8">
+            <app-jstree-plugins #filterTreeRef (jsValueChange)="getFilter($event)"></app-jstree-plugins>
+          </div>
+          <div class="col-sm-12 m-t-xl">
+            <span class="title-before pull-left"></span>
+            <h3 class="pull-left m-l-sm">目标用户分析内容设置</h3>
+          </div>
+          <div class="col-sm-8 m-t-xl">
+            <app-jstree-plugins #featureTreeRef (jsValueChange)="getFeature($event)"></app-jstree-plugins>
+          </div>
+          <div class="col-sm-12 m-t-xl m-r-n-xl">
+            <button class="btn btn-sm btn-primary pull-right" type="button" (click)="onAdd()"
+                    [disabled]="!f.valid || info.filter.length ==0 || info.feature.length == 0">新建
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

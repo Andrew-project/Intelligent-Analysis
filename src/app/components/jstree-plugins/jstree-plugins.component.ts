@@ -40,7 +40,7 @@ export class JstreePluginsComponent implements OnInit, AfterViewInit {
            "icon": "glyphicon glyphicon-leaf"
          }
        },
-       'plugins': ['dnd', 'search', '', 'state', 'types', 'wholerow'],
+       'plugins': ['dnd', 'search', '', 'state', 'types', 'wholerow', inputOptions.isCheckbox ? 'checkbox' : ''],
        'core': {
          'data': inputOptions.data
        },
@@ -52,7 +52,7 @@ export class JstreePluginsComponent implements OnInit, AfterViewInit {
 
      $(this.nodeEle).on('changed.jstree', (e, data) => {
        if (data && data.node) {
-         let emitObj = JSON.stringify({id: data.node.original.id});
+         let emitObj = JSON.stringify({ids: data.selected});
          this.jsValueChange.emit(emitObj);
        }
      });
