@@ -23,12 +23,32 @@
                   <h3 class="pull-left m-l-sm" style="font-size: 18px;">签到用户画像分析</h3>
                   <span class="pull-left m-l-sm m-t-xs" style="font-size: 15px;">全面对签到用户的人口学、购买、访问等特征进行全面分析</span>
                 </div>
+                <div class="col-sm-12 m-t-md">
+                  <div class="col-sm-4">
+                    <h3>分析总人数</h3>
+                    <p>近期有访问日志的用户</p>
+                    <span class="label label-success">人数： {{dataInfo.total_user}}</span>
+                  </div>
+                  <div class="col-sm-4">
+                    <h3>分析条件</h3>
+                    <p>可以自定义，后续会开放自助分析功能，敬请期待</p>
+                    <span class="label label-success">筛选条件：{{dataInfo.filter_name.join(',')}}</span>
+                  </div>
+                  <div class="col-sm-4">
+                    <h3>匹配用户</h3>
+                    <p>通过筛选条件匹配到的用户</p>
+                    <span class="label label-success">匹配人数：{{dataInfo.filter_match_user_num}}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div id="tab-2" class="tab-pane">
             <div class="panel-body">
-
+              <div *ngFor="let item of dataInfo.feature_list">
+              <h3>{{item.text}}</h3>
+                <h4 *ngFor="let subtext of item.subtexts"><span class="label label-primary">{{subtext}}</span></h4>
+              </div>
             </div>
           </div>
           <div id="tab-3" class="tab-pane">
@@ -82,7 +102,8 @@
                   <div class="col-sm-12">
                     <div class="m-t-sm">
                       <label class="pull-left m-t-sm m-r-md">节点搜索: </label>
-                      <input type="text" class="form-control" style="width: 50%" #input (keyup)="searchTree(input.value)">
+                      <input type="text" class="form-control" style="width: 50%" #input
+                             (keyup)="searchTree(input.value)">
                     </div>
                     <app-jstree-plugins #jsTreeRef (jsValueChange)="getTreeInfo($event)"></app-jstree-plugins>
                   </div>

@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {JstreePluginsComponent} from '../../../components/jstree-plugins/jstree-plugins.component';
 import {LoadingService} from '../../../services/loading/loading.service';
+import jstreeData from '../../../../assets/js_tree';
 
 @Component({
   selector: 'app-new-portrait',
@@ -17,106 +18,47 @@ export class NewPortraitComponent implements OnInit {
     feature: [],
     support: 20
   };
+  filterIds: Array<any> = [];
+  featureIds: Array<any> = [];
   constructor(private loadingService: LoadingService) {
+
   }
 
   ngOnInit() {
     const filterOpt = {
       isCheckbox: true,
-      data: [
-        {
-          'text': '用户等级',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level',
-          'parent': '#'
-        },
-        {
-          'text': '淘宝等级',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level-tb',
-          'parent': 'level'
-        },
-        {
-          'text': '淘宝等级v5_6',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level-tb-v5%6',
-          'parent': 'level-tb'
-        },
-        {
-          'text': '天猫等级',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level-tm',
-          'parent': 'level'
-        },
-        {
-          'text': '天猫等级v5_6',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level-tm-v5%6',
-          'parent': 'level-tm'
-        },
-        {
-          'text': '天猫等级v1_7',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level-tm-v1%7',
-          'parent': 'level-tm'
-        }
-
-      ]
+      data: jstreeData.data.filter
     };
     const featureOpt = {
       isCheckbox: true,
-      data: [
-        {
-          'text': '用户等级',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level',
-          'parent': '#'
-        },
-        {
-          'text': '淘宝等级',
-          'state': {
-            'opened': false
-          },
-          'type': 'FilterNode',
-          'id': 'level-tb',
-          'parent': 'level'
-        }
-      ]
+      data: jstreeData.data.feature
     };
     this.filterTreeRef.initJsTree(filterOpt);
     this.featureTreeRef.initJsTree(featureOpt);
+    this.filterIds = jstreeData.data.filterDB;
+    this.featureIds = jstreeData.data.featureDB;
   }
 
   getFeature(e) {
     console.log(JSON.parse(e));
-    this.info.feature = JSON.parse(e).ids;
+    this.info.feature = [];
+    const ids = JSON.parse(e).ids;
+    ids.forEach(id => {
+      if (this.featureIds.filter(ID => ID === id).length !== 0) {
+        this.info.feature.push(id);
+      }
+    });
   }
 
   getFilter(e) {
     console.log(JSON.parse(e));
-    this.info.filter = JSON.parse(e).ids;
-  }
+    this.info.filter = [];
+    const ids = JSON.parse(e).ids;
+    ids.forEach(id => {
+      if (this.filterIds.filter(ID => ID === id).length !== 0) {
+        this.info.filter.push(id);
+      }
+    });  }
 
   onAdd() {
     console.log(this.info);
