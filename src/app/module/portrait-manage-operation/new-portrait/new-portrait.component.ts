@@ -40,7 +40,6 @@ export class NewPortraitComponent implements OnInit {
   }
 
   getFeature(e) {
-    console.log(JSON.parse(e));
     this.info.feature = [];
     const ids = JSON.parse(e).ids;
     ids.forEach(id => {
@@ -51,7 +50,6 @@ export class NewPortraitComponent implements OnInit {
   }
 
   getFilter(e) {
-    console.log(JSON.parse(e));
     this.info.filter = [];
     const ids = JSON.parse(e).ids;
     ids.forEach(id => {

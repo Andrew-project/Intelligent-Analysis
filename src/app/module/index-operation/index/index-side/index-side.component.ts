@@ -1,5 +1,5 @@
 import {Location} from '@angular/common';
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -17,41 +17,36 @@ export class IndexSideComponent implements OnInit, AfterViewInit, OnDestroy {
   sidePath: string;
 
   constructor (private router: Router,
-               private location: Location) {
+               private location: Location,
+               private elementRef: ElementRef) {
   }
 
   ngOnInit () {
     const pathArr = this.location.path().toString().split('/');
     pathArr.splice(0, 1);
-    this.sidePath = pathArr.join('/');
-    this.sideRouting.forEach((item) => {
-      item.subRouting.forEach((subItem, idx) => {
-        subItem.sideColor = '';
-        if (subItem.path === this.sidePath) {
-          subItem.sideColor = 'color-white';
-        }
-      });
-    });
+    if (pathArr.filter(item => item === 'portrait-manage').length > 0) {
+      this.elementRef.nativeElement.querySelectorAll('.side_color')[0].style.color = '#ffffff';
+    }
   }
 
   onSignOut () {
     localStorage.clear();
   }
 
-  onUpdatePassword () {
-    localStorage.clear();
-  }
 
   ngAfterViewInit () {
 
   }
 
-  onClickSide (itemIdx: number, index: number) {
-   this.sideRouting.forEach((item) => {
-     item.subRouting.map((subItem) =>
-       subItem.sideColor = '');
-   });
-   this.sideRouting[itemIdx].subRouting[index].sideColor = 'color-white';
+  onClickSide (index: number) {
+    console.log(index)
+   this.elementRef.nativeElement.querySelectorAll('.side_color').forEach((item, idx) => {
+      console.log(idx)
+     item.style['color'] = '';
+     if (idx === index) {
+       item.style['color'] = '#ffffff';
+     }
+   })
   }
 
   ngOnDestroy () {

@@ -155,8 +155,10 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['isNow']) {
       if (changes['isNow'].currentValue) {
-        this.data = changes['inputOpt'].currentValue;
-        this.initEchart();
+        if (changes['inputOpt']) {
+          this.data = changes['inputOpt'].currentValue;
+          this.initEchart();
+        }
       }
     }
   }

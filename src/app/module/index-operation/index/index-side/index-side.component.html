@@ -13,9 +13,6 @@
                               class="caret"></b></span> </span>
           </a>
           <ul class="dropdown-menu animated fadeInRight m-t-xs">
-            <!--<li><a>个人资料</a></li>-->
-            <li><a (click)="onUpdatePassword()">修改密码</a></li>
-            <!--<li (click)="updateImg()"><a>修改头像</a></li>-->
             <li class="divider"></li>
             <li><a (click)="onSignOut()">注销</a></li>
           </ul>
@@ -24,18 +21,18 @@
           心声
         </div>
       </li>
-        <li class="sideRoutes">
-          <a [routerLink]="'/portrait/portrait-manage'"><i class="fa"></i>
+        <li class="sideRoutes" (click)="onClickSide(0)">
+          <a [routerLink]="'/portrait/portrait-manage'" class="side_color"><i class="fa"></i>
             <span class="nav-label">画像分析</span></a>
           <ul class="nav nav-second-level collapse">
           </ul>
         </li>
-      <li class="sideRoutes">
-        <a><i class="fa"></i>
+      <li class="sideRoutes" (click)="onClickSide(1)">
+        <a class="side_color"><i class="fa"></i>
           <span class="nav-label">画像库</span></a>
       </li>
-      <li class="sideRoutes">
-        <a><i class="fa"></i>
+      <li class="sideRoutes" (click)="onClickSide(2)">
+        <a class="side_color"><i class="fa"></i>
           <span class="nav-label">FAQ</span></a>
       </li>
     </ul>

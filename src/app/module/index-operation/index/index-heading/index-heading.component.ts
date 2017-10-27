@@ -2,6 +2,7 @@ import {Location} from '@angular/common';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {RoutingCenterService} from '../../../../services/routing-center/routing-center.service';
 
 @Component({
   selector: 'app-index-heading',
@@ -12,17 +13,21 @@ export class IndexHeadingComponent implements OnInit, OnDestroy {
   subscribe: Subscription;
   routing: Array<any> = [];
 
-  constructor () {
-
+  constructor(private router: Router, private location: Location, private routingCenter: RoutingCenterService) {
+    this.subscribe = this.router.events.subscribe(event => {
+      this.routing = routingCenter.getHeadingRouting(decodeURI(location.path()));
+    });
   }
 
-  ngOnInit () {
+
+  ngOnInit() {
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     try {
       this.subscribe.unsubscribe();
-    } catch (e) {}
+    } catch (e) {
+    }
   }
 
 }

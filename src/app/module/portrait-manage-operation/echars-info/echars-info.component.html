@@ -13,7 +13,7 @@
                 <li class="{{j == 0 ? 'active' : ''}}" (click)="changeTab(service)" *ngFor="let service of item.services; let j = index;"><a href="#tab_" data-toggle="tab">{{service.name}}</a></li>
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active m-t-md" id="tab_" style="width: 800px; height: 400px;">
+                <div class="tab-pane active m-t-md" id="tab_" style="width: 60%; height: 400px;">
                   <div class="echarts">
                     <app-echarts #tab_ref [inputOptions]="{services: item.services}"></app-echarts>
                   </div>
