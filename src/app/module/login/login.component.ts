@@ -30,14 +30,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit () {
     localStorage.clear();
     this.isShow = true;
-    const sub: Subscription = this.http.post(environment.baseUrl + '/api/echo/v1/login/name-password',
+    const sub: Subscription = this.http.post(environment.baseUrl + 'api/echo/v1/login/name-password',
       this.loginInfo, this.httpOpt.initRequestOptions())
       .map((response: Response) => response.json())
       .subscribe(
         (res: any) => {
           this.isShow = false;
           if (res.result.success) {
-            localStorage.setItem('userInfo', res.data);
+            localStorage.setItem('userInfo', JSON.stringify(res.data));
+            localStorage.setItem('token', res.data.token);
             this.router.navigate(['']);
           } else {
             swal('登录失败', res.result.displayMsg, 'warning');

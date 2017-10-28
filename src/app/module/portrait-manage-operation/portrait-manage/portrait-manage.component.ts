@@ -68,7 +68,7 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'searchable': false,
           'sortable': true,
           'render': (analysisTime) =>
-            formatDate(analysisTime, 'yyyy-MM-dd hh:mm')
+            analysisTime === null ? '未运行' : formatDate(analysisTime, 'yyyy-MM-dd hh:mm')
         },
         {
           'data': 'id',
@@ -76,7 +76,11 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'sortable': false,
           'render': function (id, type, full, meta) {
             return `<button class="btn btn-sm m-l-xs btn-danger button-del" data-id="${id}">删除</button>
-                    <button class="btn btn-sm m-l-xs btn-default button-info" data-id="${id}">详情</button>`;
+                    <button class="btn btn-sm m-l-xs btn-primary button-start
+                      ${full.analysisTime === null ? '' : 'display-none' }" data-id="${id}">开始分析</button>
+                      <button class="btn btn-sm m-l-xs btn-info button-edit" data-id="${id}">修改分析条件</button>
+                    <button class="btn btn-sm m-l-xs btn-default button-info
+                      ${full.analysisTime === null ? 'display-none' : '' }" data-id="${id}">详情</button>`;
           }
         }
       ],
@@ -85,7 +89,7 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
       localData: []
     };
     this.isShowLoading = true;
-    const sub: Subscription = this.http.get(environment.baseUrl + 'api/evans/v1/admins/evaluation-tools', this.httpOpt.initRequestOptions())
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/home', this.httpOpt.initRequestOptions())
       .map((response: Response) => response.json())
       .subscribe(
         (res: any) => {
@@ -97,9 +101,9 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           } else {
             if (res.result.code === 401 || res.result.code === 403) {
               this.router.navigateByUrl('/login');
-              swal('请求失败', res.result.msg, 'warning');
+              swal('请求失败', res.result.displayMsg, 'warning');
             } else if (res.result.code === 500) {
-              swal('服务器错误', res.result.msg, 'error');
+              swal('服务器错误', res.result.displayMsg, 'error');
             } else {
               swal('请求失败', res.result.displayMsg, 'warning');
             }
@@ -127,7 +131,7 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
       }, (confirm: any) => {
         if (confirm) {
           vm.isShowLoading = true;
-          const sub: Subscription = vm.http.delete(environment.baseUrl, vm.httpOpt.initRequestOptions())
+          const sub: Subscription = vm.http.delete(environment.baseUrl + 'api/echo/portrait/v1/template/' + id, vm.httpOpt.initRequestOptions())
             .map((response: Response) => response.json())
             .subscribe(
               (res: any) => {
@@ -137,12 +141,13 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
                   const index = vm.listOpt.options['localData'].findIndex(item => item.id === id);
                   vm.listOpt.options['localData'].splice(index, 1);
                   vm.listRef.initDatatable(vm.listOpt.options);
+                  vm.overview.templateNum = vm.listOpt.options['localData'].length;
                 } else {
                   if (res.result.code === 401 || res.result.code === 403) {
                     vm.router.navigateByUrl('/login');
-                    swal('请求失败', res.result.msg, 'warning');
+                    swal('请求失败', res.result.displayMsg, 'warning');
                   } else if (res.result.code === 500) {
-                    swal('服务器错误', res.result.msg, 'error');
+                    swal('服务器错误', res.result.displayMsg, 'error');
                   } else {
                     swal('请求失败', res.result.displayMsg, 'warning');
                   }
@@ -158,6 +163,44 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           vm.sweetAlertService.hide();
         }
       })
+    });
+
+    $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-start', function () {
+      const id = parseInt($(this)[0].getAttribute('data-id'), 0);
+      vm.isShowLoading = true;
+      const sub: Subscription = vm.http.patch(environment.baseUrl +
+          'api/echo/portrait/v1/template/' + id + '/analysis', {}, vm.httpOpt.initRequestOptions())
+        .map((response: Response) => response.json())
+        .subscribe(
+          (res: any) => {
+            vm.isShowLoading = false;
+            if (res.result.success) {
+              swal('开始分析成功', '', 'success');
+              const index = vm.listOpt.options['localData'].findIndex(item => item.id === id);
+              vm.listOpt.options['localData'][index] = res.data;
+              vm.listRef.initDatatable(vm.listOpt.options);
+            } else {
+              if (res.result.code === 401 || res.result.code === 403) {
+                vm.router.navigateByUrl('/login');
+                swal('请求失败', res.result.displayMsg, 'warning');
+              } else if (res.result.code === 500) {
+                swal('服务器错误', res.result.displayMsg, 'error');
+              } else {
+                swal('请求失败', res.result.displayMsg, 'warning');
+              }
+            }
+          },
+          (error: any) => {
+            vm.isShowLoading = false;
+            swal('请求错误', error, 'error');
+          }
+        );
+      vm.subArr.push(sub);
+    });
+
+    $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-edit', function () {
+      const id = parseInt($(this)[0].getAttribute('data-id'), 0);
+      vm.router.navigate(['./new'], {relativeTo: vm.route, queryParams: {editId: id}});
     });
 
     $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-info', function () {

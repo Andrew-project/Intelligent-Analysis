@@ -5,5 +5,5 @@
 
 export const environment = {
   production: true,
-  baseUrl: 'http://api-dev3.youhujia.com/',
+  baseUrl: 'http://192.168.1.56:9005/',
 };

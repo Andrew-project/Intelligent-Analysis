@@ -55,7 +55,7 @@
         "assets/js/plugins/validate/jquery.validate.min.js",
         "assets/js/iconfont/iconfont.js"
       ],
-      "environmentSource": "environments/environment.ts",
+      "environmentSource": "environments/environment.prod.ts",
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"

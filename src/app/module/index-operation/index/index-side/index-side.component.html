@@ -4,13 +4,15 @@
     <ul class="nav metismenu" id="side-menu">
       <li class="nav-header">
         <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src=""/>
+                            <img alt="image" class="img-circle" src="{{userInfo?.avatar}}"/>
                              </span>
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
-                              class="font-bold">xxxxxx</strong>
-                             </span> <span class="text-muted text-xs block">xxx<b
-                              class="caret"></b></span> </span>
+                              class="font-bold">{{userInfo?.name}}</strong>
+                             </span>
+                              <!--<span class="text-muted text-xs block">xxx<b-->
+                              <!--class="caret"></b></span> -->
+                            </span>
           </a>
           <ul class="dropdown-menu animated fadeInRight m-t-xs">
             <li class="divider"></li>

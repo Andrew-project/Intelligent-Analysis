@@ -1,7 +1,6 @@
 import {Location} from '@angular/common';
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -9,16 +8,13 @@ import {Subscription} from 'rxjs';
   templateUrl: './index-side.component.html',
   styleUrls: ['./index-side.component.scss']
 })
-export class IndexSideComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  subscription: Subscription;
-  imgSubscription: Subscription;
-  sideRouting: Array<any>= [];
-  sidePath: string;
+export class IndexSideComponent implements OnInit {
+  userInfo: any;
 
   constructor (private router: Router,
                private location: Location,
                private elementRef: ElementRef) {
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
   }
 
   ngOnInit () {
@@ -31,28 +27,15 @@ export class IndexSideComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSignOut () {
     localStorage.clear();
-  }
-
-
-  ngAfterViewInit () {
-
+    this.router.navigateByUrl('/login');
   }
 
   onClickSide (index: number) {
-    console.log(index)
     this.elementRef.nativeElement.querySelectorAll('.side_color').forEach((item, idx) => {
-      console.log(idx)
       item.style['color'] = '';
       if (idx === index) {
        item.style['color'] = '#ffffff';
      }
    })
-  }
-
-  ngOnDestroy () {
-    try {
-      this.subscription.unsubscribe();
-      this.imgSubscription.unsubscribe();
-    } catch (e) {}
   }
 }

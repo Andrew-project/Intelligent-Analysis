@@ -2,8 +2,6 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import jstree_json from '../../../../assets/jstree_json';
-import jstree_json_detail from '../../../../assets/jstree_json_detail';
 import {environment} from '../../../../environments/environment';
 import {JstreePluginsComponent} from '../../../components/jstree-plugins/jstree-plugins.component';
 import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
@@ -25,6 +23,7 @@ export class UpdatePortraitComponent implements OnInit, OnDestroy {
   echartOpt: any;
   isShowLoading = false;
   subArr: Subscription[] = [];
+  id = -1;
   colors: Array<any> = ['#84BEF0', '#ED8A58', '#FEC24B', '#77d7bb', '#97c5ff',
     '#b9b9f1', '#f4b99b', '#feda93', '#feda93', '#15a078', '#4180d1',
     '#55aefa', '#7373c4', '#f6702c', '#db9e27', '#bbebdd', '#c1eed3', '#cbe2ff', '#daebfa',
@@ -36,14 +35,13 @@ export class UpdatePortraitComponent implements OnInit, OnDestroy {
                private router: Router,
                private http: Http,
                private httpOpt: HttpInterceptor) {
-    this.jsTreeData.data = jstree_json;
-    this.jsTreeDetail = jstree_json_detail;
   }
 
   ngOnInit () {
-    const id = parseInt(this.route.snapshot.params['id'], 0);
+    this.id = parseInt(this.route.snapshot.params['id'], 0);
     this.isShowLoading = true;
-    const sub: Subscription = this.http.get(environment + 'api/xxx/' + id, this.httpOpt)
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/' +
+      this.id + '/analysis/basic', this.httpOpt)
       .map((response: Response) => response.json())
       .subscribe(
         (res: any) => {
@@ -53,9 +51,9 @@ export class UpdatePortraitComponent implements OnInit, OnDestroy {
           } else {
             if (res.result.code === 401 || res.result.code === 403) {
               this.router.navigateByUrl('/login');
-              swal('请求失败', res.result.msg, 'warning');
+              swal('请求失败', res.result.displayMsg, 'warning');
             } else if (res.result.code === 500) {
-              swal('服务器错误', res.result.msg, 'error');
+              swal('服务器错误', res.result.displayMsg, 'error');
             } else {
               swal('请求失败', res.result.displayMsg, 'warning');
             }
@@ -82,19 +80,28 @@ export class UpdatePortraitComponent implements OnInit, OnDestroy {
 
   initTree () {
     this.isShowLoading = true;
-    const sub: Subscription = this.http.get(environment.baseUrl, this.httpOpt.initRequestOptions())
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/' +
+      this.id + '/algo/tree', this.httpOpt.initRequestOptions())
       .map((response: Response) => response.json())
       .subscribe(
         (res: any) => {
           this.isShowLoading = false;
           if (res.result.success) {
-
+            this.jsTreeDetail = res.data.tree_detail;
+            res.data.tree_node.forEach(item => {
+              if (item.id === 'ROOT') {
+                item.state['selected'] = true;
+                this.treeInfo = this.jsTreeDetail['ROOT'];
+              }
+            });
+            this.jsTreeData.data = res.data.tree_node;
+            this.jsTreeRef.initJsTree(this.jsTreeData);
           } else {
             if (res.result.code === 401 || res.result.code === 403) {
               this.router.navigateByUrl('/login');
-              swal('请求失败', res.result.msg, 'warning');
+              swal('请求失败', res.result.displayMsg, 'warning');
             } else if (res.result.code === 500) {
-              swal('服务器错误', res.result.msg, 'error');
+              swal('服务器错误', res.result.displayMsg, 'error');
             } else {
               swal('请求失败', res.result.displayMsg, 'warning');
             }

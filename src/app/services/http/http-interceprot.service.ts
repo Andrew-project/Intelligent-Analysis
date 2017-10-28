@@ -13,7 +13,6 @@ export class HttpInterceptor {
     headers.append('Access-Control-Allow-Headers', 'X-Requested-With');
     headers.append('Content-Type', 'application/json');
     headers.append('crossDomain', 'true');
-    console.log(localStorage.token)
     headers.append('Authorization', localStorage.token || '');
     return query ? {headers: headers, params: query} : {headers: headers};
   }

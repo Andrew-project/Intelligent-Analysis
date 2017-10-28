@@ -15,6 +15,6 @@ export class IndexTopComponent implements OnInit {
 
   onSignOut () {
     localStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
 }

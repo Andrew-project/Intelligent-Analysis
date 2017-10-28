@@ -15,16 +15,22 @@
               <label class="control-label">分析名称</label>
               <input type="text" class="form-control" [(ngModel)]="info.name" name="name" required>
             </div>
-            <div class="col-sm-2 m-l-md m-t-sm {{support.invalid ? 'has-error' : ''}}">
-              <label class="control-label">参数设置(%)</label>
-              <input type="text" class="form-control" #support="ngModel" [(ngModel)]="info.support" name="support"
-                     required pattern="([0-9]{1,2}|100)">
-            </div>
           </div>
           <div class="col-sm-12 form-group m-t-md">
             <label class="control-label">分析描述</label>
             <textarea name="desc" style="resize: none;width: 50%;" cols="4" rows="5" class="form-control"
-                      [(ngModel)]="info.desc"></textarea>
+                      [(ngModel)]="info.desc" required></textarea>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12">
+              <span class="title-before pull-left"></span>
+              <h3 class="pull-left m-l-sm">算法参数设置</h3>
+            </div>
+            <div class="col-sm-4 m-l-md m-t-sm {{support.invalid ? 'has-error' : ''}}">
+              <label class="control-label">最小支持度(人群的最小覆盖比例 %)</label>
+              <input type="text" class="form-control" #support="ngModel" [(ngModel)]="info.support" name="support"
+                     required pattern="([0-9]{1,2}|100)">
+            </div>
           </div>
           <div class="col-sm-12 m-t-xl">
             <span class="title-before pull-left"></span>
@@ -37,12 +43,13 @@
             <span class="title-before pull-left"></span>
             <h3 class="pull-left m-l-sm">目标用户分析内容设置</h3>
           </div>
-          <div class="col-sm-8 m-t-xl">
+          <div class="col-sm-8">
             <app-jstree-plugins #featureTreeRef (jsValueChange)="getFeature($event)"></app-jstree-plugins>
           </div>
           <div class="col-sm-12 m-t-xl m-r-n-xl">
             <button class="btn btn-sm btn-primary pull-right" type="button" (click)="onAdd()"
-                    [disabled]="!f.valid || info.filter.length ==0 || info.feature.length == 0">新建
+                    [disabled]="!f.valid || info.filter.length ==0 || info.feature.length == 0">{{editId > 0 ? '修改' :
+              '新建'}}
             </button>
           </div>
         </form>

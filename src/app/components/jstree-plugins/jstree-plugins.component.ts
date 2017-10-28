@@ -40,7 +40,7 @@ export class JstreePluginsComponent implements OnInit, AfterViewInit {
            'icon': 'glyphicon glyphicon-leaf'
          }
        },
-       'plugins': ['dnd', 'search', '', 'state', 'types', 'wholerow', inputOptions.isCheckbox ? 'checkbox' : ''],
+       'plugins': ['search', 'types', 'wholerow', inputOptions.isCheckbox ? 'checkbox' : ''],
        'core': {
          'data': inputOptions.data
        },
