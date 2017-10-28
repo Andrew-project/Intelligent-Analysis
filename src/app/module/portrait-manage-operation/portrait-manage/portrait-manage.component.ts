@@ -1,19 +1,19 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DatatablePluginsComponent} from '../../../components/datatable-plugins/datatable-plugins.component';
-import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.service';
-import {LoadingService} from '../../../services/loading/loading.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../../../environments/environment';
+import {DatatablePluginsComponent} from '../../../components/datatable-plugins/datatable-plugins.component';
 import {formatDate} from '../../../services/functions/date';
+import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
+import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.service';
 
 @Component({
   selector: 'app-portrait-manage',
   templateUrl: './portrait-manage.component.html',
   styleUrls: ['./portrait-manage.component.scss']
 })
-export class PortraitManageComponent implements OnInit, AfterViewInit {
+export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('listRef') listRef: DatatablePluginsComponent;
   listOpt: any = {
     options: {}
@@ -22,17 +22,18 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
     totalUser: 0,
     templateNum: 0
   };
+  isShowLoading = false;
+  subArr: Subscription[] = [];
 
-  constructor(private elementRef: ElementRef,
-              private sweetAlertService: SweetAlertService,
-              private loadingService: LoadingService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private http: Http,
-              private httpOpt: HttpInterceptor) {
+  constructor (private elementRef: ElementRef,
+               private sweetAlertService: SweetAlertService,
+               private router: Router,
+               private route: ActivatedRoute,
+               private http: Http,
+               private httpOpt: HttpInterceptor) {
   }
 
-  ngOnInit() {
+  ngOnInit () {
     this.listOpt.options = {
       pageLength: 10,
       searching: true,
@@ -81,39 +82,39 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
       ],
       isServer: false,
       ajaxOpt: {},
-      localData: [
-        {
-          "id": 1,
-          "name": "签到用户分析",
-          "desc": "是对签到用户的分析",
-          "creator": "张三",
-          "status": "分析完成",
-          "analysisTime": 1508644737
-        }
-      ]
+      localData: []
     };
-    // this.loadingService.show();
-    // this.http.get(environment.baseUrl, this.httpOpt.initRequestOptions())
-    //   .map((response: Response) => {
-    //     return response.json();
-    //   })
-    //   .subscribe(
-    //     (res: any) => {
-    // this.loadingService.hide();
-    //       if (res.result.success) {
-    //         this.overview = res.data.overview;
-    //         this.listOpt.options['localData'] = res.data.templateList;
-    //       } else {
-    //         swal('请求失败', res.result.displayMsg, 'warning');
-    //       }
-    //       console.log(res)
-    //     }
-    //   );
-    this.listRef.initDatatable(this.listOpt.options);
+    this.isShowLoading = true;
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/evans/v1/admins/evaluation-tools', this.httpOpt.initRequestOptions())
+      .map((response: Response) => response.json())
+      .subscribe(
+        (res: any) => {
+          this.isShowLoading = false;
+          if (res.result.success) {
+            this.overview = res.data.overview;
+            this.listOpt.options['localData'] = res.data.templateList;
+            this.listRef.initDatatable(this.listOpt.options);
+          } else {
+            if (res.result.code === 401 || res.result.code === 403) {
+              this.router.navigateByUrl('/login');
+              swal('请求失败', res.result.msg, 'warning');
+            } else if (res.result.code === 500) {
+              swal('服务器错误', res.result.msg, 'error');
+            } else {
+              swal('请求失败', res.result.displayMsg, 'warning');
+            }
+          }
+        },
+        (error: any) => {
+          this.isShowLoading = false;
+          swal('请求错误', error, 'error');
+        }
+      );
+    this.subArr.push(sub);
 
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit () {
     const vm = this;
     $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-del', function () {
       const id = parseInt($(this)[0].getAttribute('data-id'), 0);
@@ -125,7 +126,34 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
         cancelButtonText: '取消',
       }, (confirm: any) => {
         if (confirm) {
-          vm.sweetAlertService.hide();
+          vm.isShowLoading = true;
+          const sub: Subscription = vm.http.delete(environment.baseUrl, vm.httpOpt.initRequestOptions())
+            .map((response: Response) => response.json())
+            .subscribe(
+              (res: any) => {
+                vm.isShowLoading = false;
+                if (res.result.success) {
+                  swal('删除成功', '', 'success');
+                  const index = vm.listOpt.options['localData'].findIndex(item => item.id === id);
+                  vm.listOpt.options['localData'].splice(index, 1);
+                  vm.listRef.initDatatable(vm.listOpt.options);
+                } else {
+                  if (res.result.code === 401 || res.result.code === 403) {
+                    vm.router.navigateByUrl('/login');
+                    swal('请求失败', res.result.msg, 'warning');
+                  } else if (res.result.code === 500) {
+                    swal('服务器错误', res.result.msg, 'error');
+                  } else {
+                    swal('请求失败', res.result.displayMsg, 'warning');
+                  }
+                }
+              },
+              (error: any) => {
+                vm.isShowLoading = false;
+                swal('请求错误', error, 'error');
+              }
+            );
+          vm.subArr.push(sub);
         } else {
           vm.sweetAlertService.hide();
         }
@@ -136,6 +164,14 @@ export class PortraitManageComponent implements OnInit, AfterViewInit {
       const id = parseInt($(this)[0].getAttribute('data-id'), 0);
       vm.router.navigate(['./update/' + id], {relativeTo: vm.route});
     })
+  }
+
+  ngOnDestroy () {
+    for (const sub of this.subArr) {
+      try {
+        sub.unsubscribe();
+      } catch (e) {}
+    }
   }
 
 }

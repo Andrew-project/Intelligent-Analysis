@@ -1,16 +1,16 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DatatablePluginsModule} from '../../components/datatable-plugins/datatable-plugins.module';
+import {EchartsPluginsModule} from '../../components/echarts-plugins/echarts-plugins.module';
+import {JstreePluginsModule} from '../../components/jstree-plugins/jstree-plugins.module';
+import {LoadingPluginsModule} from '../../components/loading-plugins/loading-plugins.module';
+import {SweetAlertService} from '../../services/sweet-alert/sweet-alert.service';
+import {EcharsInfoComponent} from './echars-info/echars-info.component';
+import {NewPortraitComponent} from './new-portrait/new-portrait.component';
 import {PortraitManageOperationRoutingModule} from './portrait-manage-operation-routing.module';
 import {PortraitManageComponent} from './portrait-manage/portrait-manage.component';
-import {DatatablePluginsModule} from '../../components/datatable-plugins/datatable-plugins.module';
-import {NewPortraitComponent} from './new-portrait/new-portrait.component';
-import {LoadingService} from '../../services/loading/loading.service';
-import {SweetAlertService} from '../../services/sweet-alert/sweet-alert.service';
-import { UpdatePortraitComponent } from './update-portrait/update-portrait.component';
-import {EchartsPluginsModule} from '../../components/echarts-plugins/echarts-plugins.module';
-import { EcharsInfoComponent } from './echars-info/echars-info.component';
-import {JstreePluginsModule} from '../../components/jstree-plugins/jstree-plugins.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {UpdatePortraitComponent} from './update-portrait/update-portrait.component';
 
 @NgModule({
   imports: [
@@ -20,10 +20,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     PortraitManageOperationRoutingModule,
     DatatablePluginsModule,
     EchartsPluginsModule,
-    JstreePluginsModule
+    JstreePluginsModule,
+    LoadingPluginsModule
   ],
   declarations: [PortraitManageComponent, NewPortraitComponent, UpdatePortraitComponent, EcharsInfoComponent],
-  providers: [LoadingService, SweetAlertService]
+  providers: [SweetAlertService]
 })
 export class PortraitManageOperationModule {
 }

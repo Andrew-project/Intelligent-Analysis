@@ -5,5 +5,5 @@
 
 export const environment = {
   production: true,
-  baseUrl: 'http://api.zhushou.staging.youhujia.com/api/evans/v1/admins/sickbed-tag',
+  baseUrl: 'http://api-dev3.youhujia.com/',
 };

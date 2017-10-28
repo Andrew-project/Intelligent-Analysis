@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {PortraitManageComponent} from './portrait-manage/portrait-manage.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {NewPortraitComponent} from './new-portrait/new-portrait.component';
+import {PortraitManageComponent} from './portrait-manage/portrait-manage.component';
 import {UpdatePortraitComponent} from './update-portrait/update-portrait.component';
 
 const routes: Routes = [
@@ -28,4 +28,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PortraitManageOperationRoutingModule { }
+export class PortraitManageOperationRoutingModule {
+}

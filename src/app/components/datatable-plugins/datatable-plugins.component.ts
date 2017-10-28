@@ -89,7 +89,7 @@ export class DatatablePluginsComponent implements OnInit {
           'infoEmpty': '没有数据',
           'infoFiltered': '(过滤总件数 _MAX_ 条)'
         },
-        buttons:[]
+        buttons: []
       });
       $(this.elementRef.nativeElement.querySelector('table')).show();
 

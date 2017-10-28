@@ -1,0 +1,22 @@
+<div class="gray-bg" id="login-wrapper">
+  <div class="middle-box text-center loginscreen animated fadeInDown ">
+    <div>
+      <div>
+        <h1 class="logo-name"></h1>
+      </div>
+      <p class="p-margin-top-30">
+        请登录后使用
+      </p>
+      <form class="m-t" #form="ngForm" (ngSubmit)="0;onSubmit()">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入用户名" name="name" [(ngModel)]="loginInfo.name" required #phone="ngModel">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="请输入密码" name="password" [(ngModel)]="loginInfo.password" required #password="ngModel">
+        </div>
+        <button type="submit" class="btn btn-primary block full-width m-b" [disabled]="!form.valid">登录</button>
+      </form>
+    </div>
+  </div>
+</div>
+<app-loading-plugins [showBlock]="isShow"></app-loading-plugins>

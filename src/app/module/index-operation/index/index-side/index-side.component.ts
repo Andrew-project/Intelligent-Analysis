@@ -40,10 +40,10 @@ export class IndexSideComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onClickSide (index: number) {
     console.log(index)
-   this.elementRef.nativeElement.querySelectorAll('.side_color').forEach((item, idx) => {
+    this.elementRef.nativeElement.querySelectorAll('.side_color').forEach((item, idx) => {
       console.log(idx)
-     item.style['color'] = '';
-     if (idx === index) {
+      item.style['color'] = '';
+      if (idx === index) {
        item.style['color'] = '#ffffff';
      }
    })

@@ -8,7 +8,7 @@ import {EchartsPluginsComponent} from '../../../components/echarts-plugins/echar
 })
 export class EcharsInfoComponent implements OnInit, OnChanges {
   @ViewChildren(EchartsPluginsComponent) tab_ref: QueryList<EchartsPluginsComponent>;
-  @Input() isNow: boolean = false;
+  @Input() isNow = false;
   @Input() inputOpt: any;
   data: any;
   colors: Array<any> = ['#1dbc8e', '#32C86E', '#529EFF', '#84BEF0', '#8A8AE7', '#ED8A58',
@@ -19,15 +19,15 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
     '#edce93', '#ef9191', '#7fe0e0', '#ffbfbf', '#b1e0ea', '#7fafbe', '#ccf3f3', '#ffe6e6', '#e0f3f7',
     '#ccdfe5', '#175c98', '#4c4c8c'];
 
-  constructor() {
+  constructor () {
   }
 
-  ngOnInit() {
+  ngOnInit () {
 
   }
 
-  init_line_bar(tab_ref,l_data, x_data, s0_data, s1_data, text, subtext, y1_max) {
-    let option = {
+  init_line_bar (tab_ref, l_data, x_data, s0_data, s1_data, text, subtext, y1_max) {
+    const option = {
       title: {
         text: text,
         subtext: subtext, 'x': 'center'
@@ -116,8 +116,8 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
     tab_ref.initOption(option);
   }
 
-  init_pie(tab_ref, l_data, s_data, text, subtext) {
-    let option = {
+  init_pie (tab_ref, l_data, s_data, text, subtext) {
+    const option = {
       legend: {
         data: l_data,
         orient: 'vertical',
@@ -152,7 +152,7 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
     tab_ref.initOption(option);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges (changes: SimpleChanges) {
     if (changes['isNow']) {
       if (changes['isNow'].currentValue) {
         if (changes['inputOpt']) {
@@ -163,7 +163,7 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
     }
   }
 
-  initEchart() {
+  initEchart () {
     setTimeout(() => {
       for (const echart of this.tab_ref['_results']) {
         const services = echart.inputOptions.services;
@@ -172,7 +172,9 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
           service['echart'] = echart;
           if (i === 0) {
             if (service.type === 'line-bar') {
-              this.init_line_bar(echart, ['所占比例', '覆盖人数'], service.service.x_data, service.service.s0_data, service.service.s1_data, service.service.text, service.service.subtext, service.service.y1_max);
+              this.init_line_bar(echart, ['所占比例', '覆盖人数'], service.service.x_data,
+                service.service.s0_data, service.service.s1_data, service.service.text,
+                service.service.subtext, service.service.y1_max);
             } else {
               this.init_pie(echart, service.service.l_data, service.service.x0_data, service.service.text, service.service.subtext);
             }
@@ -182,9 +184,10 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
     })
   }
 
-  changeTab(service) {
+  changeTab (service) {
     if (service.type === 'line-bar') {
-      this.init_line_bar(service.echart, ['所占比例', '覆盖人数'], service.service.x_data, service.service.s0_data, service.service.s1_data, service.service.text, service.service.subtext, service.service.y1_max);
+      this.init_line_bar(service.echart, ['所占比例', '覆盖人数'], service.service.x_data,
+        service.service.s0_data, service.service.s1_data, service.service.text, service.service.subtext, service.service.y1_max);
     } else {
       this.init_pie(service.echart, service.service.l_data, service.service.x0_data, service.service.text, service.service.subtext);
     }

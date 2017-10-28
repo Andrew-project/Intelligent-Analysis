@@ -1,4 +1,5 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -6,18 +7,14 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
   templateUrl: './index-top.component.html',
   styleUrls: ['./index-top.component.scss']
 })
-export class IndexTopComponent implements OnInit, OnDestroy {
-  constructor () { }
+export class IndexTopComponent implements OnInit {
+  constructor (private router: Router) { }
 
   ngOnInit () {
   }
 
   onSignOut () {
-    // this.router.navigate([this.userInfo.userInfo.authority+'/login']);
     localStorage.clear();
-  }
-
-  ngOnDestroy () {
-
+    this.router.navigate(['/login']);
   }
 }

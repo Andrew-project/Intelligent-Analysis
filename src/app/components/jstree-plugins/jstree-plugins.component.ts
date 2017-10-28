@@ -26,33 +26,33 @@ export class JstreePluginsComponent implements OnInit, AfterViewInit {
      this.nodeEle = this.elementRef.nativeElement.querySelector('.jstree-edit');
      $(this.nodeEle).jstree('refresh');
      $(this.nodeEle).jstree({
-       "types": {
-         "term": {
-           "icon" : "glyphicon glyphicon-leaf"
+       'types': {
+         'term': {
+           'icon' : 'glyphicon glyphicon-leaf'
          },
-         "opinion": {
-           "icon": "glyphicon glyphicon-leaf"
+         'opinion': {
+           'icon': 'glyphicon glyphicon-leaf'
          },
-         "feedback": {
-           "icon": "glyphicon glyphicon-leaf"
+         'feedback': {
+           'icon': 'glyphicon glyphicon-leaf'
          },
-         "default": {
-           "icon": "glyphicon glyphicon-leaf"
+         'default': {
+           'icon': 'glyphicon glyphicon-leaf'
          }
        },
        'plugins': ['dnd', 'search', '', 'state', 'types', 'wholerow', inputOptions.isCheckbox ? 'checkbox' : ''],
        'core': {
          'data': inputOptions.data
        },
-       "search": {
-         "case_insensitive": true,
-         "show_only_matches": true
+       'search': {
+         'case_insensitive': true,
+         'show_only_matches': true
        }
      });
 
      $(this.nodeEle).on('changed.jstree', (e, data) => {
        if (data && data.node) {
-         let emitObj = JSON.stringify({ids: data.selected});
+         const emitObj = JSON.stringify({ids: data.selected});
          this.jsValueChange.emit(emitObj);
        }
      });
@@ -62,7 +62,7 @@ export class JstreePluginsComponent implements OnInit, AfterViewInit {
      });
    }
 
-   searchTree(val) {
+   searchTree (val) {
      $(this.nodeEle).jstree(true).search(val);
    }
 

@@ -13,17 +13,17 @@ export class IndexHeadingComponent implements OnInit, OnDestroy {
   subscribe: Subscription;
   routing: Array<any> = [];
 
-  constructor(private router: Router, private location: Location, private routingCenter: RoutingCenterService) {
+  constructor (private router: Router, private location: Location, private routingCenter: RoutingCenterService) {
     this.subscribe = this.router.events.subscribe(event => {
       this.routing = routingCenter.getHeadingRouting(decodeURI(location.path()));
     });
   }
 
 
-  ngOnInit() {
+  ngOnInit () {
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy (): void {
     try {
       this.subscribe.unsubscribe();
     } catch (e) {
