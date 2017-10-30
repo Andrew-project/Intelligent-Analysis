@@ -42,5 +42,6 @@ Thumbs.db
 
 #docs
 /ng-doc
-
+yarn.lock
+yarn-error.log
 package-lock.json
