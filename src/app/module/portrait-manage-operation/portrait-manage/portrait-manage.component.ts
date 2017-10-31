@@ -37,12 +37,17 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
     this.listOpt.options = {
       pageLength: 10,
       searching: true,
-      titleColumns: ['名称', '描述', '创建人', '状态', '最新分析时间', '操作'],
+      titleColumns: ['ID', '名称', '描述', '创建人', '状态', '最新分析时间', '操作'],
       searchData: '',
       initSort: [
-        [4, 'desc']
+        [0, 'asc']
       ],
       columns: [
+        {
+          'data': 'id',
+          'searchable': false,
+          'sortable': true
+        },
         {
           'data': 'name',
           'searchable': true,
@@ -175,7 +180,7 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           (res: any) => {
             vm.isShowLoading = false;
             if (res.result.success) {
-              swal('开始分析成功', '', 'success');
+              swal('分析成功', '', 'success');
               const index = vm.listOpt.options['localData'].findIndex(item => item.id === id);
               vm.listOpt.options['localData'][index] = res.data;
               vm.listRef.initDatatable(vm.listOpt.options);

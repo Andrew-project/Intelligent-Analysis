@@ -16,6 +16,11 @@ export class IndexHeadingComponent implements OnInit, OnDestroy {
   constructor (private router: Router, private location: Location, private routingCenter: RoutingCenterService) {
     this.subscribe = this.router.events.subscribe(event => {
       this.routing = routingCenter.getHeadingRouting(decodeURI(location.path()));
+      this.routing.forEach((item, idx) => {
+        if (item.notLink && item.path === item.name) {
+          this.routing.splice(idx, 1);
+        }
+      });
     });
   }
 

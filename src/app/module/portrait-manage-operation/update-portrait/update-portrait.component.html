@@ -5,13 +5,13 @@
         <ul class="nav nav-tabs">
           <li class="active" (click)="changeTab(1)"><a data-toggle="tab" href="#tab-1"><i class="fa fa-info"></i>
             基本条件分析</a></li>
-          <li class="" (click)="changeTab(2)"><a data-toggle="tab" href="#tab-2"><i class="fa fa-rmb"></i>
+          <li class="" (click)="changeTab(2)"><a data-toggle="tab" href="#tab-2"><i class="fa fa-info"></i>
             分析包含画像</a></li>
-          <li class="" (click)="changeTab(3)"><a data-toggle="tab" href="#tab-3"><i class="fa fa-book"></i>
+          <li class="" (click)="changeTab(3)"><a data-toggle="tab" href="#tab-3"><i class="fa fa-info"></i>
             典型画像特征</a></li>
-          <li class="" (click)="changeTab(4)"><a data-toggle="tab" href="#tab-4"><i class="fa fa-book"></i>
+          <li class="" (click)="changeTab(4)"><a data-toggle="tab" href="#tab-4"><i class="fa fa-info"></i>
             用户画像特征</a></li>
-          <li class="" (click)="changeTab(5)"><a data-toggle="tab" href="#tab-5"><i class="fa fa-book"></i>
+          <li class="" (click)="changeTab(5)"><a data-toggle="tab" href="#tab-5"><i class="fa fa-info"></i>
             智能用户画像分析结果</a></li>
         </ul>
         <div class="tab-content">
@@ -21,23 +21,58 @@
                 <div class="col-sm-12">
                   <span class="title-before pull-left"></span>
                   <h3 class="pull-left m-l-sm" style="font-size: 18px;">{{dataInfo?.name}}</h3>
-                  <span class="pull-left m-l-sm m-t-xs" style="font-size: 15px;">{{dataInfo?.desc}}</span>
+                  <span class="pull-left m-l-sm m-t-xs" style="font-size: 15px;">({{dataInfo?.desc}})</span>
                 </div>
                 <div class="col-sm-12 m-t-md">
-                  <div class="col-sm-4">
-                    <h3>分析总人数</h3>
-                    <p>近期有访问日志的用户</p>
-                    <span class="label label-primary">人数： {{dataInfo?.total_user}}人</span>
+                  <div class="ibox m-b-sm clearfix">
+                    <div class="ibox-content clearfix" style="padding-bottom: 0px;">
+                      <div class="col-sm-12">
+                        <h2>分析总人数</h2>
+                        <p style="font-size: 16px;" class="clearfix">近期有访问日志的用户</p>
+                        <div class="col-sm-12" style="padding-left: 0px;">
+                          <h4 style="font-size: 16px;" class="pull-left">人数：</h4>
+                          <ng-container class="pull-left">
+                            <h4 class="m-r-sm m-b-md" style="display: inline-block;"><span
+                              class="label label-primary" style="font-size: 16px;">{{dataInfo?.total_user}}人</span>
+                            </h4>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-sm-4">
-                    <h3>分析条件</h3>
-                    <p>可以自定义，后续会开放自助分析功能，敬请期待</p>
-                    <p style="background-color: #1ab394;color: #FFFFFF;padding: 3px 8px;">筛选条件：{{dataInfo?.filter_name.join('、 ')}}</p>
+
+                  <div class="ibox m-b-sm">
+                    <div class="ibox-content clearfix" style="padding-bottom: 0px;">
+                      <div class="col-sm-12">
+                        <h2>分析条件</h2>
+                        <p style="font-size: 16px;">可以自定义，后续会开放自助分析功能，敬请期待</p>
+                        <div class="col-sm-12" style="padding-left: 0px;">
+                          <h4 style="font-size: 16px;" class="pull-left">筛选条件：</h4>
+                          <ng-container class="pull-left">
+                            <h4 class="m-r-sm m-b-md" style="display: inline-block;" *ngFor="let fName of dataInfo?.filter_name"><span
+                              class="label label-primary" style="font-size: 16px;">{{fName}}</span>
+                            </h4>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-sm-4">
-                    <h3>匹配用户</h3>
-                    <p>通过筛选条件匹配到的用户</p>
-                    <span class="label label-primary">匹配人数：{{dataInfo?.filter_match_user_num}}人</span>
+
+                  <div class="ibox m-b-sm">
+                    <div class="ibox-content clearfix" style="padding-bottom: 0px;">
+                      <div class="col-sm-12">
+                        <h2>匹配用户</h2>
+                        <p style="font-size: 16px;">通过筛选条件匹配到的用户</p>
+                        <div class="col-sm-12" style="padding-left: 0px;">
+                          <h4 style="font-size: 16px;" class="pull-left">匹配人数：</h4>
+                          <ng-container class="pull-left">
+                            <h4 class="m-r-sm m-b-md" style="display: inline-block;"><span
+                              class="label label-primary" style="font-size: 16px;">{{dataInfo?.filter_match_user_num}}人</span>
+                            </h4>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -52,7 +87,8 @@
                 </div>
                 <div class="col-sm-12">
                   <h4 *ngFor="let subtext of item.subtexts;" class="col-sm-2"><span class="label"
-                                                                                    [style.background-color]="colors[k]">{{subtext}}</span>
+                                                                                    [style.background-color]="colors[k]"
+                                                                                    style="font-size: 16px;">{{subtext}}</span>
                   </h4>
                 </div>
               </div>

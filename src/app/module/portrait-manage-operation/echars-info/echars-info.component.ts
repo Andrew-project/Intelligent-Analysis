@@ -51,6 +51,15 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
         axisTick: {
           alignWithLabel: true
         },
+        axisLabel: {
+          rotate: 45,
+          margin: 10,
+          interval: 0,
+          textStyle: {
+            color: '#555555',
+            fontSize: 14
+          }
+        },
         type: 'category',
         data: x_data
       },

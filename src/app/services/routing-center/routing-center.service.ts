@@ -22,7 +22,7 @@ export class RoutingCenterService {
             },
             {
               path: 'update',
-              name: '编辑',
+              name: '详情',
               notLink: true
             }
           ]
@@ -36,7 +36,6 @@ export class RoutingCenterService {
     const urlArray = url.split('/');
     const headingRouting = [];
     const routingStack = [''];
-    console.log(this.routingMap)
     let routePointer = this.routingMap;
     urlArray.shift();
     for (const u of urlArray) {
