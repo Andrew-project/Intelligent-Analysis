@@ -39,7 +39,11 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (res.result.success) {
             localStorage.setItem('userInfo', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
-            this.router.navigate(['']);
+            if (res.data.products) {
+              location.href = '/portrait/' + res.data.products[0].name + '/portrait-manage';
+            } else {
+              location.href = '';
+            }
           } else {
             swal('登录失败', res.result.displayMsg, 'warning');
           }

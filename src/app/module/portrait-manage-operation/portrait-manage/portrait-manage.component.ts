@@ -7,6 +7,7 @@ import {DatatablePluginsComponent} from '../../../components/datatable-plugins/d
 import {formatDate} from '../../../services/functions/date';
 import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
 import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-portrait-manage',
@@ -15,11 +16,60 @@ import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.servi
 })
 export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('listRef') listRef: DatatablePluginsComponent;
+  @ViewChild('resultRef') resultRef: DatatablePluginsComponent;
   listOpt: any = {
     options: {}
   };
+  type = '';
+  resultOpt: any = {
+    options: {
+      pageLength: 10,
+      searching: true,
+      titleColumns: ['ID', '创建人', '分析时间', '分析版本', '操作'],
+      searchData: '',
+      initSort: [
+        [0, 'desc']
+      ],
+      columns: [
+        {
+          'data': 'id',
+          'searchable': false,
+          'sortable': true
+        },
+        {
+          'data': 'creator',
+          'searchable': true,
+          'sortable': false
+        },
+        {
+          'data': 'gmt_create',
+          'searchable': true,
+          'sortable': false,
+          'render': (gmt_create) =>
+            formatDate(gmt_create, 'yyyy-MM-dd hh:mm')
+        },
+        {
+          'data': 'version',
+          'searchable': true,
+          'sortable': false
+        },
+        {
+          'data': 'id',
+          'searchable': false,
+          'sortable': false,
+          'render': function (id, type, full, meta) {
+            return `<button class="btn btn-sm btn-primary button-info" data-id="${id}">详情</button>`;
+          }
+        }
+      ],
+      isServer: false,
+      ajaxOpt: {},
+      localData: []
+    }
+  };
   overview: any = {
     totalUser: 0,
+    newestVersion: '',
     templateNum: 0
   };
   isShowLoading = false;
@@ -30,17 +80,28 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
                private router: Router,
                private route: ActivatedRoute,
                private http: Http,
+               private location: Location,
                private httpOpt: HttpInterceptor) {
+    const urlArray = location.path().split('/');
+    this.type = urlArray[urlArray.length - 1];
+    this.route.params.subscribe(
+      (res) => {
+        this.type = res.authority;
+        this.ngOnInit();
+      }
+    );
   }
 
   ngOnInit () {
+    console.log(this.type)
+    const vm = this;
     this.listOpt.options = {
       pageLength: 10,
       searching: true,
-      titleColumns: ['ID', '名称', '描述', '创建人', '状态', '最新分析时间', '操作'],
+      titleColumns: ['ID', '名称', '描述', '创建人', '状态', '最新版本', '最新分析时间', '操作'],
       searchData: '',
       initSort: [
-        [0, 'asc']
+        [0, 'desc']
       ],
       columns: [
         {
@@ -69,6 +130,11 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'sortable': false
         },
         {
+          'data': 'newestVersion',
+          'searchable': true,
+          'sortable': true
+        },
+        {
           'data': 'analysisTime',
           'searchable': false,
           'sortable': true,
@@ -80,12 +146,18 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'searchable': false,
           'sortable': false,
           'render': function (id, type, full, meta) {
-            return `<button class="btn btn-sm m-l-xs btn-danger button-del" data-id="${id}">删除</button>
-                    <button class="btn btn-sm m-l-xs btn-primary button-start
-                      ${full.analysisTime === null ? '' : 'display-none' }" data-id="${id}">开始分析</button>
-                      <button class="btn btn-sm m-l-xs btn-info button-edit" data-id="${id}">修改分析条件</button>
-                    <button class="btn btn-sm m-l-xs btn-default button-info
-                      ${full.analysisTime === null ? 'display-none' : '' }" data-id="${id}">详情</button>`;
+            let html = '';
+            if (full.status === '待分析') {
+              html += `<button class="btn btn-sm m-l-xs btn-primary button-start" data-id="${id}">开始分析</button>`;
+            } else {
+              if (vm.overview.newestVersion !== full.newestVersion) {
+                html += `<button class="btn btn-sm m-l-xs btn-primary button-start" data-id="${id}">开始分析</button>`;
+              }
+              html += `<button class="btn btn-sm m-l-xs btn-primary button-list" data-id="${id}">查看结果列表</button>`;
+            }
+            html += `<button class="btn btn-sm m-l-xs btn-info button-edit" data-id="${id}">修改分析条件</button>
+                     <button class="btn btn-sm m-l-xs btn-danger button-del" data-id="${id}">删除</button>`;
+            return html;
           }
         }
       ],
@@ -94,7 +166,8 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
       localData: []
     };
     this.isShowLoading = true;
-    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/home', this.httpOpt.initRequestOptions())
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/product/' + this.type + '/home',
+      this.httpOpt.initRequestOptions())
       .map((response: Response) => response.json())
       .subscribe(
         (res: any) => {
@@ -208,10 +281,47 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
       vm.router.navigate(['./new'], {relativeTo: vm.route, queryParams: {editId: id}});
     });
 
-    $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-info', function () {
+    $(this.elementRef.nativeElement.querySelector('#resultModal')).on('click', '.button-info', function () {
       const id = parseInt($(this)[0].getAttribute('data-id'), 0);
       vm.router.navigate(['./update/' + id], {relativeTo: vm.route});
+      $('#resultModal').modal('hide');
+    });
+
+    $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-list', function () {
+      const id = parseInt($(this)[0].getAttribute('data-id'), 0);
+      $('#resultModal').modal('show');
+      vm.getResultList(id);
     })
+  }
+
+  getResultList (id: number) {
+    this.isShowLoading = true;
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/' +
+      id + '/result', this.httpOpt.initRequestOptions())
+      .map((response: Response) => response.json())
+      .subscribe(
+        (res: any) => {
+          this.isShowLoading = false;
+          if (res.result.success) {
+            this.resultOpt.options.localData = res.data;
+            this.resultRef.initDatatable(this.resultOpt.options);
+          } else {
+            if (res.result.code === 401 || res.result.code === 403) {
+              this.router.navigateByUrl('/login');
+              swal('请求失败', res.result.displayMsg, 'warning');
+            } else if (res.result.code === 500) {
+              swal('服务器错误', res.result.displayMsg, 'error');
+            } else {
+              swal('请求失败', res.result.displayMsg, 'warning');
+            }
+          }
+        },
+        (error: any) => {
+          this.isShowLoading = false;
+          swal('请求错误', error, 'error');
+        }
+      );
+    this.subArr.push(sub);
   }
 
   ngOnDestroy () {

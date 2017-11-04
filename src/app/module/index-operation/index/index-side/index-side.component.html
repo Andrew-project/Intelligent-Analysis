@@ -23,17 +23,25 @@
           心声
         </div>
       </li>
-        <li class="sideRoutes" (click)="onClickSide(0)">
-          <a [routerLink]="'/portrait/portrait-manage'" class="side_color"><i class="fa"></i>
-            <span class="nav-label">画像分析</span></a>
+        <li class="sideRoutes">
+          <a class="color-white"><i class="fa"></i>
+            <span class="nav-label">画像分析</span><span
+              class='fa arrow'></span></a>
           <ul class="nav nav-second-level collapse">
+            <ng-container *ngFor="let subRouting of routing; let idx = index;">
+              <!--<li (click)="navRouter(subRouting.path)">-->
+              <!--<li [attr.bw-router]="  subRouting.path" routerLinkActive="">-->
+              <li>
+                <a [routerLink]="'/'+subRouting.path" class="{{subRouting.sideColor}}" (click)="onClickSide(idx)">{{subRouting.display}}</a>
+              </li>
+            </ng-container>
           </ul>
         </li>
-      <li class="sideRoutes" (click)="onClickSide(1)">
+      <li class="sideRoutes">
         <a class="side_color"><i class="fa"></i>
           <span class="nav-label">画像库</span></a>
       </li>
-      <li class="sideRoutes" (click)="onClickSide(2)">
+      <li class="sideRoutes">
         <a class="side_color"><i class="fa"></i>
           <span class="nav-label">FAQ</span></a>
       </li>

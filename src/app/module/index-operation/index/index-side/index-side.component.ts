@@ -1,6 +1,7 @@
 import {Location} from '@angular/common';
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {RoutingCenterService} from '../../../../services/routing-center/routing-center.service';
 
 
 @Component({
@@ -10,19 +11,24 @@ import {Router} from '@angular/router';
 })
 export class IndexSideComponent implements OnInit {
   userInfo: any;
+  routing = [];
 
   constructor (private router: Router,
                private location: Location,
-               private elementRef: ElementRef) {
+               private routingCenter: RoutingCenterService) {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    this.routing = routingCenter.getRouting();
   }
 
   ngOnInit () {
     const pathArr = this.location.path().toString().split('/');
-    pathArr.splice(0, 1);
-    if (pathArr.filter(item => item === 'portrait-manage').length > 0) {
-      this.elementRef.nativeElement.querySelectorAll('.side_color')[0].style.color = '#ffffff';
-    }
+    const path = pathArr.slice(0, 4).join('/');
+    this.routing.forEach((item) => {
+        item.sideColor = '';
+        if (item.path === path) {
+          item.sideColor = 'color-white';
+        }
+      });
   }
 
   onSignOut () {
@@ -31,11 +37,9 @@ export class IndexSideComponent implements OnInit {
   }
 
   onClickSide (index: number) {
-    this.elementRef.nativeElement.querySelectorAll('.side_color').forEach((item, idx) => {
-      item.style['color'] = '';
-      if (idx === index) {
-       item.style['color'] = '#ffffff';
-     }
-   })
+    this.routing.forEach((item) => {
+      item.sideColor = '';
+    });
+    this.routing[index].sideColor = 'color-white';
   }
 }

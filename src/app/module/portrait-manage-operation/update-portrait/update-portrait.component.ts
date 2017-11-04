@@ -40,7 +40,7 @@ export class UpdatePortraitComponent implements OnInit, OnDestroy {
   ngOnInit () {
     this.id = parseInt(this.route.snapshot.params['id'], 0);
     this.isShowLoading = true;
-    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/' +
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/result/' +
       this.id + '/analysis/basic', this.httpOpt)
       .map((response: Response) => response.json())
       .subscribe(
@@ -80,7 +80,7 @@ export class UpdatePortraitComponent implements OnInit, OnDestroy {
 
   initTree () {
     this.isShowLoading = true;
-    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/' +
+    const sub: Subscription = this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/result/' +
       this.id + '/algo/tree', this.httpOpt.initRequestOptions())
       .map((response: Response) => response.json())
       .subscribe(

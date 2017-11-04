@@ -6,7 +6,7 @@ import {UpdatePortraitComponent} from './update-portrait/update-portrait.compone
 
 const routes: Routes = [
   {
-    path: 'portrait-manage',
+    path: ':authority/portrait-manage',
     children: [
       {
         path: '',

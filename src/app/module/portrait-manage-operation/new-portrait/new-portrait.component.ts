@@ -7,6 +7,7 @@ import {JstreePluginsComponent} from '../../../components/jstree-plugins/jstree-
 import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
 import {isNullOrUndefined} from 'util';
 import {Observable} from 'rxjs/Observable';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-new-portrait',
@@ -23,6 +24,7 @@ export class NewPortraitComponent implements OnInit, OnDestroy {
     feature: [],
     support: 20
   };
+  type = '';
   filterIds: Array<any> = [];
   featureIds: Array<any> = [];
   isShowLoading = false;
@@ -32,7 +34,10 @@ export class NewPortraitComponent implements OnInit, OnDestroy {
   constructor(private http: Http,
               private router: Router,
               private route: ActivatedRoute,
+              private location: Location,
               private httpOpt: HttpInterceptor) {
+    const urlArray = location.path().split('/');
+    this.type = urlArray[2];
   }
 
   getEditReq(id): Observable<any> {
@@ -42,11 +47,11 @@ export class NewPortraitComponent implements OnInit, OnDestroy {
   }
 
   getTreeReq(): Observable<any> {
-    return this.http.get(environment.baseUrl + 'api/echo/portrait/v1/template/candidate', this.httpOpt.initRequestOptions())
+    return this.http.get(environment.baseUrl + 'api/echo/portrait/v1/product/' + this.type + '/template/candidate', this.httpOpt.initRequestOptions())
       .map((response: Response) => response.json());
   }
 
-  ngOnInit() {
+  ngOnInit () {
     let services;
     if (!isNullOrUndefined(this.route.queryParams['value'].editId)) {
       this.editId = parseInt(this.route.queryParams['value'].editId, 0);
@@ -207,7 +212,7 @@ export class NewPortraitComponent implements OnInit, OnDestroy {
     // this.subArr.push(sub);
   }
 
-  getFeature(e) {
+  getFeature (e) {
     this.info.feature = [];
     const ids = JSON.parse(e).ids;
     ids.forEach(id => {
@@ -232,9 +237,9 @@ export class NewPortraitComponent implements OnInit, OnDestroy {
     this.isShowLoading = true;
     let httpReq;
     if (this.editId > 0) {
-      httpReq = this.http.patch(environment.baseUrl + 'api/echo/portrait/v1/template/' + this.editId, this.info, this.httpOpt.initRequestOptions());
+      httpReq = this.http.patch(environment.baseUrl + 'api/echo/portrait/v1/product/' + this.type + '/template/' + this.editId, this.info, this.httpOpt.initRequestOptions());
     } else {
-      httpReq = this.http.post(environment.baseUrl + 'api/echo/portrait/v1/template', this.info, this.httpOpt.initRequestOptions());
+      httpReq = this.http.post(environment.baseUrl + 'api/echo/portrait/v1/product/' + this.type + '/template', this.info, this.httpOpt.initRequestOptions());
     }
     const sub: Subscription = httpReq
       .map((response: Response) => response.json())
@@ -267,7 +272,7 @@ export class NewPortraitComponent implements OnInit, OnDestroy {
     this.subArr.push(sub);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy () {
     for (const sub of this.subArr) {
       try {
         sub.unsubscribe();

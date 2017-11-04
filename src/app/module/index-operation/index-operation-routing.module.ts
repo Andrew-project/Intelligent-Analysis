@@ -23,6 +23,7 @@ const routes: Routes = [
 })
 export class IndexOperationRoutingModule {
   constructor () {
+
   }
 }
 

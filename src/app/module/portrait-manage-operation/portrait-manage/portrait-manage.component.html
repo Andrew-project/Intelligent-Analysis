@@ -7,13 +7,17 @@
       </div>
       <div class="row">
         <form>
-          <div class="col-sm-6 form-group text-center m-t-md">
+          <div class="col-sm-4 form-group text-center m-t-md">
             <p class="m-b-sm">用户总数</p>
             <h1>{{overview.totalUser}}</h1>
           </div>
-          <div class="col-sm-6 form-group text-center m-t-md">
+          <div class="col-sm-4 form-group text-center m-t-md">
             <p class="m-b-sm">分析模版数</p>
             <h1>{{overview.templateNum}}</h1>
+          </div>
+          <div class="col-sm-4 form-group text-center m-t-md">
+            <p class="m-b-sm">当前版本</p>
+            <h1>{{overview.newestVersion}}</h1>
           </div>
         </form>
       </div>
@@ -37,3 +41,26 @@
   </div>
 </div>
 <app-loading-plugins [showBlock]="isShowLoading"></app-loading-plugins>
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel"
+     aria-hidden="true" style="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title inline" id="resultModalLabel">分析结果列表</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-bottom: 0px;">
+        <form #f="ngForm">
+          <div class="form-group">
+            <div>
+              <app-datatable-plugins [inputOptions]="resultOpt" #resultRef></app-datatable-plugins>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -14,6 +14,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit () {
+    console.log(localStorage.getItem('userInfo'))
     if (isNullOrUndefined(localStorage.getItem('userInfo'))) {
       this.router.navigateByUrl('/login');
       swal('token无效', '请重新登录', 'warning');
