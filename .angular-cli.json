@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "ng-public",
       "assets": [
         "assets",
         "favicon.ico"
@@ -55,10 +55,10 @@
         "assets/js/plugins/validate/jquery.validate.min.js",
         "assets/js/iconfont/iconfont.js"
       ],
-      "environmentSource": "environments/environment.prod.ts",
+      "environmentSource": "environments/environment.pro.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "pro": "environments/environment.pro.ts"
       }
     }
   ],

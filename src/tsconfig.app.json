@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
+    "outDir": "../ng-public/out-tsc",
     "baseUrl": "",
     "declaration": false,
     "emitDecoratorMetadata": true,
