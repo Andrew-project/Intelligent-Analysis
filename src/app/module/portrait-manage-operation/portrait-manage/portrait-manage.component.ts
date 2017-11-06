@@ -58,7 +58,8 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'searchable': false,
           'sortable': false,
           'render': function (id, type, full, meta) {
-            return `<button class="btn btn-sm btn-primary button-info" data-id="${id}">详情</button>`;
+            return `<button class="btn btn-sm btn-primary button-info" data-id="${id}">详情</button>
+                    <button class="btn btn-sm btn-danger btn-list-del" data-id="${id}">删除</button>`;
           }
         }
       ],
@@ -220,6 +221,51 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
                   vm.listOpt.options['localData'].splice(index, 1);
                   vm.listRef.initDatatable(vm.listOpt.options);
                   vm.overview.templateNum = vm.listOpt.options['localData'].length;
+                } else {
+                  if (res.result.code === 401 || res.result.code === 403) {
+                    vm.router.navigateByUrl('/login');
+                    swal('请求失败', res.result.displayMsg, 'warning');
+                  } else if (res.result.code === 500) {
+                    swal('服务器错误', res.result.displayMsg, 'error');
+                  } else {
+                    swal('请求失败', res.result.displayMsg, 'warning');
+                  }
+                }
+              },
+              (error: any) => {
+                vm.isShowLoading = false;
+                swal('请求错误', error, 'error');
+              }
+            );
+          vm.subArr.push(sub);
+        } else {
+          vm.sweetAlertService.hide();
+        }
+      })
+    });
+
+    $(this.elementRef.nativeElement.querySelector('#resultModal')).on('click', '.btn-list-del', function () {
+      const id = parseInt($(this)[0].getAttribute('data-id'), 0);
+      vm.sweetAlertService.showALert({
+        title: '请确定是否删除',
+        text: '',
+        showCancelButton: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }, (confirm: any) => {
+        if (confirm) {
+          vm.isShowLoading = true;
+          const sub: Subscription = vm.http.delete(environment.baseUrl + 'api/echo/portrait/v1/template/result/' + id,
+            vm.httpOpt.initRequestOptions())
+            .map((response: Response) => response.json())
+            .subscribe(
+              (res: any) => {
+                vm.isShowLoading = false;
+                if (res.result.success) {
+                  swal('删除成功', '', 'success');
+                  const index = vm.resultOpt.options['localData'].findIndex(item => item.id === id);
+                  vm.resultOpt.options['localData'].splice(index, 1);
+                  vm.resultRef.initDatatable(vm.resultOpt.options);
                 } else {
                   if (res.result.code === 401 || res.result.code === 403) {
                     vm.router.navigateByUrl('/login');
