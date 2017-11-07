@@ -8,6 +8,7 @@ import {formatDate} from '../../../services/functions/date';
 import {HttpInterceptor} from '../../../services/http/http-interceprot.service';
 import {SweetAlertService} from '../../../services/sweet-alert/sweet-alert.service';
 import {Location} from '@angular/common';
+import {ItemService} from './item.service';
 
 @Component({
   selector: 'app-portrait-manage',
@@ -17,6 +18,7 @@ import {Location} from '@angular/common';
 export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('listRef') listRef: DatatablePluginsComponent;
   @ViewChild('resultRef') resultRef: DatatablePluginsComponent;
+
   listOpt: any = {
     options: {}
   };
@@ -82,7 +84,8 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
                private route: ActivatedRoute,
                private http: Http,
                private location: Location,
-               private httpOpt: HttpInterceptor) {
+               private httpOpt: HttpInterceptor,
+               private itemService: ItemService) {
     const urlArray = location.path().split('/');
     this.type = urlArray[urlArray.length - 1];
     this.route.params.subscribe(
@@ -94,7 +97,6 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit () {
-    console.log(this.type)
     const vm = this;
     this.listOpt.options = {
       pageLength: 10,
@@ -140,7 +142,7 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'searchable': false,
           'sortable': true,
           'render': (analysisTime) =>
-            analysisTime === null ? '未运行' : formatDate(analysisTime, 'yyyy-MM-dd hh:mm')
+            analysisTime === null ? '未运行' : analysisTime === -1 ? '分析中' : formatDate(analysisTime, 'yyyy-MM-dd hh:mm')
         },
         {
           'data': 'id',
@@ -148,16 +150,20 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           'sortable': false,
           'render': function (id, type, full, meta) {
             let html = '';
-            if (full.status === '待分析') {
-              html += `<button class="btn btn-sm m-l-xs btn-primary button-start" data-id="${id}">开始分析</button>`;
+            if (full.analysisTime === -1) {
+              html = `<span>分析中...</span>`;
             } else {
-              if (vm.overview.newestVersion !== full.newestVersion) {
+              if (full.status === '待分析') {
                 html += `<button class="btn btn-sm m-l-xs btn-primary button-start" data-id="${id}">开始分析</button>`;
+              } else {
+                if (vm.overview.newestVersion !== full.newestVersion) {
+                  html += `<button class="btn btn-sm m-l-xs btn-primary button-start" data-id="${id}">开始分析</button>`;
+                }
+                html += `<button class="btn btn-sm m-l-xs btn-primary button-list" data-id="${id}">查看结果列表</button>`;
               }
-              html += `<button class="btn btn-sm m-l-xs btn-primary button-list" data-id="${id}">查看结果列表</button>`;
-            }
-            html += `<button class="btn btn-sm m-l-xs btn-info button-edit" data-id="${id}">修改分析条件</button>
+              html += `<button class="btn btn-sm m-l-xs btn-info button-edit" data-id="${id}">修改分析条件</button>
                      <button class="btn btn-sm m-l-xs btn-danger button-del" data-id="${id}">删除</button>`;
+            }
             return html;
           }
         }
@@ -176,6 +182,10 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           if (res.result.success) {
             this.overview = res.data.overview;
             this.listOpt.options['localData'] = res.data.templateList;
+            if (this.itemService.analysisItem) {
+              const idx = this.listOpt.options['localData'].findIndex(item => item.id === this.itemService.analysisItem.id);
+              this.listOpt.options['localData'][idx] = this.itemService.analysisItem;
+            }
             this.listRef.initDatatable(this.listOpt.options);
           } else {
             if (res.result.code === 401 || res.result.code === 403) {
@@ -292,6 +302,14 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
     $(this.elementRef.nativeElement.querySelector('.ibox-content')).on('click', '.button-start', function () {
       const id = parseInt($(this)[0].getAttribute('data-id'), 0);
       vm.isShowLoading = true;
+      const index = vm.listOpt.options['localData'].findIndex(item => item.id === id);
+      vm.listOpt.options['localData'][index].analysisTime = -1;
+      vm.listRef.initDatatable(vm.listOpt.options);
+      setTimeout(() => {
+        vm.isShowLoading = false;
+        vm.itemService.createItem(vm.listOpt.options['localData'][index]);
+      }, 500);
+
       const sub: Subscription = vm.http.patch(environment.baseUrl +
           'api/echo/portrait/v1/template/' + id + '/analysis', {}, vm.httpOpt.initRequestOptions())
         .map((response: Response) => response.json())
@@ -299,9 +317,9 @@ export class PortraitManageComponent implements OnInit, AfterViewInit, OnDestroy
           (res: any) => {
             vm.isShowLoading = false;
             if (res.result.success) {
-              swal('分析成功', '', 'success');
-              const index = vm.listOpt.options['localData'].findIndex(item => item.id === id);
-              vm.listOpt.options['localData'][index] = res.data;
+              // swal('分析成功', '', 'success');
+              const idx = vm.listOpt.options['localData'].findIndex(item => item.id === id);
+              vm.listOpt.options['localData'][idx] = res.data;
               vm.listRef.initDatatable(vm.listOpt.options);
             } else {
               if (res.result.code === 401 || res.result.code === 403) {

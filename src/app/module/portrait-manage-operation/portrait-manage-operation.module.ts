@@ -11,6 +11,7 @@ import {NewPortraitComponent} from './new-portrait/new-portrait.component';
 import {PortraitManageOperationRoutingModule} from './portrait-manage-operation-routing.module';
 import {PortraitManageComponent} from './portrait-manage/portrait-manage.component';
 import {UpdatePortraitComponent} from './update-portrait/update-portrait.component';
+import {ItemService} from './portrait-manage/item.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import {UpdatePortraitComponent} from './update-portrait/update-portrait.compone
     LoadingPluginsModule
   ],
   declarations: [PortraitManageComponent, NewPortraitComponent, UpdatePortraitComponent, EcharsInfoComponent],
-  providers: [SweetAlertService]
+  providers: [SweetAlertService, ItemService]
 })
 export class PortraitManageOperationModule {
 }
