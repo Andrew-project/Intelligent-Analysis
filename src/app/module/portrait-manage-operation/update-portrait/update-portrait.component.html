@@ -74,6 +74,10 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="col-sm-12 m-t-md">
+                    <a class="btn btn-sm btn-primary pull-right" [routerLink]="['../../']">返回分析列表</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -91,6 +95,9 @@
                                                                                     style="font-size: 16px;">{{subtext}}</span>
                   </h4>
                 </div>
+              </div>
+              <div class="col-sm-12">
+                <a class="btn btn-sm btn-primary pull-right" [routerLink]="['../../']">返回分析列表</a>
               </div>
             </div>
           </div>
@@ -128,12 +135,18 @@
                     </tbody>
                   </table>
                 </div>
+                <div class="col-sm-12 m-t-md">
+                  <a class="btn btn-sm btn-primary pull-right" [routerLink]="['../../']">返回分析列表</a>
+                </div>
               </div>
             </div>
           </div>
           <div id="tab-4" class="tab-pane">
             <div class="panel-body">
               <app-echars-info [isNow]="isEchart" [inputOpt]="echartOpt"></app-echars-info>
+              <div class="col-sm-12 m-t-md">
+                <a class="btn btn-sm btn-primary pull-right" [routerLink]="['../../']">返回分析列表</a>
+              </div>
             </div>
           </div>
           <div id="tab-5" class="tab-pane">
@@ -179,6 +192,9 @@
                     </table>
                   </div>
                 </div>
+              </div>
+              <div class="col-sm-12 m-t-md">
+                <a class="btn btn-sm btn-primary pull-right" [routerLink]="['../../']">返回分析列表</a>
               </div>
             </div>
           </div>
