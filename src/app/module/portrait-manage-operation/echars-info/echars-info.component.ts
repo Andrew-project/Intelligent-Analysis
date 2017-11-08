@@ -143,7 +143,7 @@ export class EcharsInfoComponent implements OnInit, OnChanges {
       color: this.colors,
       series: [
         {
-          center: ['50%', '60%'],
+          center: ['70%', '60%'],
           itemStyle: {
             emphasis:
               {
